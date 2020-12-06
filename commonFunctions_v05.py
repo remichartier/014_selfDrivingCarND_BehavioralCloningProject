@@ -45,11 +45,11 @@ def get_lines_logfile(nb_lines=None) :
             l.append(line)
     return l[:nb_lines]
 
-
-def get_info_from_lines(l,leftright_steer_corr,nb_images=None) :
+# if possible get path in input parameter to avoid calling this repeatedly ; log_path = get_log_path()
+def get_info_from_lines(l,leftright_steer_corr,log_path,nb_images=None) :
     imgs = []
     meas = []
-    log_path = get_log_path()
+    # log_path = get_log_path()
     #print('Function get_info_from_lines() : Load images ... Please wait ....')
     for line in l[1:nb_images] :
         #image = cv2.imread(log_path + line[0].strip())
@@ -67,7 +67,8 @@ def get_info_from_lines(l,leftright_steer_corr,nb_images=None) :
 
 def get_info_from_logfile(leftright_steer_correction,nb_images=None,test_size=0.2) :
     lines = get_lines_logfile()
-    return get_info_from_lines(lines,leftright_steer_correction,nb_images)
+    log_folder = get_log_path()
+    return get_info_from_lines(lines,leftright_steer_correction,log_folder,nb_images)
 
 def flip_horizontally(img,meas):
     aug_img, aug_meas = [],[]
@@ -79,6 +80,7 @@ def flip_horizontally(img,meas):
 def generator(samples, leftright_steer_corr, batch_size=32):
     # notes : taking lines from 'driving_log.csv' in input ...
     num_samples = len(samples)
+    log_folder = get_log_path()
     while 1: # Loop forever so the generator never terminates
         shuffle(samples)
         for offset in range(0, num_samples, batch_size):        
@@ -95,7 +97,8 @@ def generator(samples, leftright_steer_corr, batch_size=32):
                 images.append(center_image)
                 angles.append(center_angle)
             '''            
-            images,angles = get_info_from_lines(batch_samples,leftright_steer_corr,nb_images=None)
+
+            images,angles = get_info_from_lines(batch_samples,leftright_steer_corr,log_folder,nb_images=None)
             #print(f'Generator : images list size : {len(images)}, each image shape : {images[0].shape}, y_train size {len(angles)}')
             
             # data augmentation flip horizontally image + inverse measurements
