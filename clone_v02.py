@@ -2,18 +2,18 @@
 import numpy as np
 import cv2
 
-# History
-# v01 : start
-# v02 : try use only np.arrays, to skip conversion list/np.arrays
-
 from commonFunctions_v02 import get_info_from_logfile
 
-X_train, y_train = get_info_from_logfile()
+# History
+# v01 : Start
+# v02 : add nb_images to read parameter
 
-# X_train = np.array(images)
-# y_train = np.array(measurements)
+images, measurements = get_info_from_logfile(nb_images=None)
 
-print(f'X_train shape : {X_train.shape}, y_train shape : {y_train.shape()}')
+X_train = np.array(images)
+y_train = np.array(measurements)
+
+#print(f'X_train shape : {X_train.shape}')
 #print(f'images shape : {im.shape}')
 
 from keras.models import Sequential

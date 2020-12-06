@@ -1,8 +1,6 @@
 import os
 import csv
 import cv2
-import numpy as np
-
 
 
 # list of common functions
@@ -13,9 +11,8 @@ import numpy as np
 # from commonFunctions_vxx import
 
 # History
-# v01 : start
-# v02 : try use only np.arrays, to skip conversion list/np.arrays
-
+# v01 : Start
+# v02 : add nb_images to read parameter
 
 driving_log_file = 'driving_log.csv'
 
@@ -38,20 +35,19 @@ def get_lines_logfile() :
     return l
 
 
-def get_info_from_lines(l) :
-    imgs = np.array([])
-    meas = np.array([])
+def get_info_from_lines(l,nb_images=None) :
+    imgs = []
+    meas = []
     log_path = get_log_path()
     print('Function get_info_from_lines() : Load images ... Please wait ....')
-    for line in l[1:] :
-        image = cv2.imread(log_path + line[0].strip())
-        imgs = np.append(imgs,image)
+    for line in l[1:nb_images] :
+        image = cv2.imread(log_path + line[0])
+        imgs.append(image)
         measurement = float(line[3])
-        meas = np.append(meas,measurement)
+        meas.append(measurement)
     print('Function get_info_from_lines() : Images loaded')
-    print(f'imgs : {imgs.shape}, meas : {meas.shape}')
     return imgs,meas
 
-def get_info_from_logfile() :
+def get_info_from_logfile(nb_images=None) :
     lines = get_lines_logfile()
-    return get_info_from_lines(lines)
+    return get_info_from_lines(lines,nb_images)
