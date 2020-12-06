@@ -2,8 +2,11 @@
 import numpy as np
 import cv2
 
-from commonFunctions_v05 import get_info_from_logfile
+from commonFunctions_v05 import get_lines_logfile
 from commonFunctions_v05 import flip_horizontally
+from commonFunctions_v05 import generator
+from sklearn.model_selection import train_test_split
+from math import ceil
 
 # History
 # v01 : Start

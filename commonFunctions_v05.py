@@ -1,10 +1,13 @@
 import os
 import csv
+import numpy as np
 import cv2
 import sklearn # for utils.shuffle()
 
+
 from scipy import ndimage
 from sklearn.model_selection import train_test_split
+from random import shuffle
 
 
 # list of common functions
@@ -47,7 +50,7 @@ def get_info_from_lines(l,leftright_steer_corr,nb_images=None) :
     imgs = []
     meas = []
     log_path = get_log_path()
-    print('Function get_info_from_lines() : Load images ... Please wait ....')
+    #print('Function get_info_from_lines() : Load images ... Please wait ....')
     for line in l[1:nb_images] :
         #image = cv2.imread(log_path + line[0].strip())
         for i in range(3) :         # center image, left , right images
@@ -59,7 +62,7 @@ def get_info_from_lines(l,leftright_steer_corr,nb_images=None) :
         meas.append(measurement)
         measurement -= leftright_steer_corr # right image
         meas.append(measurement)
-    print('Function get_info_from_lines() : Images loaded')
+    #print('Function get_info_from_lines() : Images loaded')
     return imgs,meas
 
 def get_info_from_logfile(leftright_steer_correction,nb_images=None,test_size=0.2) :
@@ -93,13 +96,15 @@ def generator(samples, leftright_steer_corr, batch_size=32):
                 angles.append(center_angle)
             '''            
             images,angles = get_info_from_lines(batch_samples,leftright_steer_corr,nb_images=None)
+            #print(f'Generator : images list size : {len(images)}, each image shape : {images[0].shape}, y_train size {len(angles)}')
             
             # data augmentation flip horizontally image + inverse measurements
             augm_images, augm_angles = flip_horizontally(images,angles)
-            images.extend(augm_angles)
+            images.extend(augm_images)
             angles.extend(augm_angles)
             
             # trim image to only see section with road
             X_train = np.array(images)
             y_train = np.array(angles)
+            #print(f'Generator : X_train {X_train.shape}, y_train {y_train.shape}')
             yield sklearn.utils.shuffle(X_train, y_train)
