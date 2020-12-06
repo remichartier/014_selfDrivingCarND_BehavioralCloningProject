@@ -2,14 +2,15 @@
 import numpy as np
 import cv2
 
-from commonFunctions_v03 import get_info_from_logfile
-from commonFunctions_v03 import flip_horizontally
+from commonFunctions_v04 import get_info_from_logfile
+from commonFunctions_v04 import flip_horizontally
 
 # History
 # v01 : Start
 # v02 : add nb_images to read parameter
 # v03 : add normalization + mean centering data to 0
 # v04 : data augmentation flip horizontally image + inverse measurements
+#       + use left/right images + measurements
 
 # get images + steering angle measurements
 images, measurements = get_info_from_logfile(nb_images=100)
