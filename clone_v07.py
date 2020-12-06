@@ -2,8 +2,8 @@
 import numpy as np
 import cv2
 
-from commonFunctions_v04 import get_info_from_logfile
-from commonFunctions_v04 import flip_horizontally
+from commonFunctions_v05 import get_info_from_logfile
+from commonFunctions_v05 import flip_horizontally
 
 # History
 # v01 : Start
@@ -21,7 +21,7 @@ STEER_CORRECTION_FACTOR = 0.2 # to tune up for left and right images/measurement
 # get images + steering angle measurements
 # images, measurements = get_info_from_logfile(STEER_CORRECTION_FACTOR,nb_images=100,test_size=0.2)
 
-lines = get_lines_logfile()
+lines = get_lines_logfile(nb_lines=1000)
 
 # need to insert Generator here. Samples = lines from driving_log_file = 'driving_log.csv'
 train_samples, validation_samples = train_test_split(lines, test_size=0.2)
@@ -67,9 +67,9 @@ checkpoint = ModelCheckpoint(filepath='bestModelFolder/model.{epoch:02d}-{val_lo
 stopper = EarlyStopping(monitor='val_loss', min_delta=0.0003, patience=5)
 # model.fit(callbacks=[checkpoint, stopper])
 # model.fit(X_train,y_train, validation_split=0.2, shuffle = True, epochs=10, callbacks=[checkpoint, stopper])
-model.fit_generator(train_generator, /
-            steps_per_epoch=ceil(len(train_samples)/batch_size), /
-            validation_data=validation_generator, /
-            validation_steps=ceil(len(validation_samples)/batch_size), /
-            epochs=5, verbose=1,callbacks=[checkpoint, stopper])
+model.fit_generator(train_generator,
+                    steps_per_epoch=ceil(len(train_samples)/batch_size),
+                    validation_data=validation_generator,
+                    validation_steps=ceil(len(validation_samples)/batch_size),
+                    epochs=5, verbose=1,callbacks=[checkpoint, stopper])
 model.save('model.h5')

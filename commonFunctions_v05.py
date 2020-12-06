@@ -20,7 +20,7 @@ from sklearn.model_selection import train_test_split
 # v02 : add nb_images to read parameter
 # v03 : from scipy import ndimage, due to cv2.imread will get images in BGR format, while drive.py uses RGB. In the video above one way you could keep the same image formatting is to do "image = ndimage.imread(current_path)"
 # v04 : use left + right images to augment data + measurements extrapolations
-# v05 : add Generator Function
+# v05 : add Generator Function + modify all other functions whenever necessary to use generator function ...
 
 driving_log_file = 'driving_log.csv'
 
@@ -34,13 +34,13 @@ def get_log_path() :
         return("./simulationData/001_1stTrackSampleDrivingData/")
 
 
-def get_lines_logfile() :
+def get_lines_logfile(nb_lines=None) :
     l = []
     with open (get_log_path() + driving_log_file ) as csv_file :
         reader = csv.reader(csv_file)
         for line in reader :
             l.append(line)
-    return l
+    return l[:nb_lines]
 
 
 def get_info_from_lines(l,leftright_steer_corr,nb_images=None) :
