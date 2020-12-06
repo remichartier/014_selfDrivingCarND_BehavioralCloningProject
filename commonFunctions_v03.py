@@ -9,6 +9,7 @@ from scipy import ndimage
 # from commonFunctions_vxx import get_lines_logfile 
 # from commonFunctions_vxx import get_info_from_lines
 # from commonFunctions_vxx import get_info_from_logfile
+# from commonFunctions_v03 import flip_horizontally
 # from commonFunctions_vxx import
 
 # History
@@ -54,3 +55,10 @@ def get_info_from_lines(l,nb_images=None) :
 def get_info_from_logfile(nb_images=None) :
     lines = get_lines_logfile()
     return get_info_from_lines(lines,nb_images)
+
+def flip_horizontally(img,meas):
+    aug_img, aug_meas = [],[]
+    for i,m in zip(img,meas) :
+        aug_img.append(cv2.flip(i,1))
+        aug_meas.append(m*(-1.0))
+    return aug_img,aug_meas

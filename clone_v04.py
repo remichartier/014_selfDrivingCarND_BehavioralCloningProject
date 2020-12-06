@@ -3,13 +3,21 @@ import numpy as np
 import cv2
 
 from commonFunctions_v03 import get_info_from_logfile
+from commonFunctions_v03 import flip_horizontally
 
 # History
 # v01 : Start
 # v02 : add nb_images to read parameter
 # v03 : add normalization + mean centering data to 0
+# v04 : data augmentation flip horizontally image + inverse measurements
 
+# get images + steering angle measurements
 images, measurements = get_info_from_logfile(nb_images=100)
+
+# data augmentation flip horizontally image + inverse measurements
+augm_images, augm_measurements = flip_horizontally(images,measurements)
+images.extend(augm_images)
+measurements.extend(augm_measurements)
 
 X_train = np.array(images)
 y_train = np.array(measurements)
