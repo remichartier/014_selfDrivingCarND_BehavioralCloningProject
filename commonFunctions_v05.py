@@ -64,8 +64,6 @@ def get_info_from_lines(l,leftright_steer_corr,nb_images=None) :
 
 def get_info_from_logfile(leftright_steer_correction,nb_images=None,test_size=0.2) :
     lines = get_lines_logfile()
-    # need to insert Generator here. Samples = lines from driving_log_file = 'driving_log.csv'
-    train_samples, validation_samples = train_test_split(lines, test_size=0.2)
     return get_info_from_lines(lines,leftright_steer_correction,nb_images)
 
 def flip_horizontally(img,meas):
@@ -75,7 +73,7 @@ def flip_horizontally(img,meas):
         aug_meas.append(m*(-1.0))
     return aug_img,aug_meas
 
-def generator(samples, batch_size=32):
+def generator(samples, leftright_steer_corr, batch_size=32):
     # notes : taking lines from 'driving_log.csv' in input ...
     num_samples = len(samples)
     while 1: # Loop forever so the generator never terminates
@@ -94,7 +92,12 @@ def generator(samples, batch_size=32):
                 images.append(center_image)
                 angles.append(center_angle)
             '''            
-            images,angles = get_info_from_lines(l,leftright_steer_corr,nb_images=None)
+            images,angles = get_info_from_lines(batch_samples,leftright_steer_corr,nb_images=None)
+            
+            # data augmentation flip horizontally image + inverse measurements
+            augm_images, augm_angles = flip_horizontally(images,angles)
+            images.extend(augm_angles)
+            angles.extend(augm_angles)
             
             # trim image to only see section with road
             X_train = np.array(images)
