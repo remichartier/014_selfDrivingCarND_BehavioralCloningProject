@@ -19,6 +19,7 @@ from commonFunctions_v07 import visualize_loss_history
 # v09 : Re-start from v06 as fit_generator and need to add generator obsolete.
 #       Latest Keras.Model.fit integrates a generator in itself.
 #       ie v09 : Visualize loss history
+# v10 : choose better model for self driving cars and for this simulation.
 
 STEER_CORRECTION_FACTOR = 0.2 # to tune up for left and right images/measurements
 
