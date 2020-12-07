@@ -50,10 +50,9 @@ model.add(Dense(1))
 model.compile(loss='mse', optimizer='adam')
 # Callbacks to save best model and prevent overfit by early stopping 
 checkpoint = ModelCheckpoint(filepath='bestModelFolder/model.{epoch:02d}-{val_loss:.2f}.h5', monitor='val_loss', save_best_only=True)
-stopper = EarlyStopping(monitor='val_loss', min_delta=0.0003, patience=5)
+stopper = EarlyStopping(monitor='val_loss', min_delta=0.0003, patience=10)
 # model.fit(callbacks=[checkpoint, stopper])
-model.fit(X_train,y_train, batch_size, validation_split=0.2, shuffle = True, epochs=10, callbacks=[checkpoint, stopper],
-         use_multiprocessing=True)
+history_object = model.fit(X_train,y_train, batch_size, validation_split=0.2, shuffle = True, epochs=10, callbacks=[checkpoint, stopper])
 
 '''
 fit(
@@ -65,4 +64,16 @@ fit(
 )
 '''
 
+
 model.save('model.h5')
+
+import matplotlib.pyplot as plt
+
+### plot the training and validation loss for each epoch
+plt.plot(history_object.history['loss'])
+plt.plot(history_object.history['val_loss'])
+plt.title('model mean squared error loss')
+plt.ylabel('mean squared error loss')
+plt.xlabel('epoch')
+plt.legend(['training set', 'validation set'], loc='upper right')
+plt.show()
