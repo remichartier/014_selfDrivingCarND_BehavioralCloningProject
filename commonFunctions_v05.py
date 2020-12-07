@@ -51,9 +51,10 @@ def get_info_from_lines(l,leftright_steer_corr,log_path,nb_images=None) :
     meas = []
     # log_path = get_log_path()
     #print('Function get_info_from_lines() : Load images ... Please wait ....')
-    for line in l[1:nb_images] :
+    for line in l[:nb_images] :
         #image = cv2.imread(log_path + line[0].strip())
         for i in range(3) :         # center image, left , right images
+            #print(f'Reading file {log_path + line[i].strip()} from line[i] : __{line[i]}__')
             image = ndimage.imread(log_path + line[i].strip())
             imgs.append(image)
         measurement = float(line[3]) # center image

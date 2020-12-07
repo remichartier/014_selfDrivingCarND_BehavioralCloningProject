@@ -27,7 +27,8 @@ STEER_CORRECTION_FACTOR = 0.2 # to tune up for left and right images/measurement
 lines = get_lines_logfile(nb_lines=1000)
 
 # need to insert Generator here. Samples = lines from driving_log_file = 'driving_log.csv'
-train_samples, validation_samples = train_test_split(lines, test_size=0.2)
+# note : remove first line (column titles) --> lines[1:]
+train_samples, validation_samples = train_test_split(lines[1:], test_size=0.2)
 
 # Set our batch size
 batch_size=32
@@ -67,12 +68,12 @@ model.add(Dense(1))
 model.compile(loss='mse', optimizer='adam')
 # Callbacks to save best model and prevent overfit by early stopping 
 checkpoint = ModelCheckpoint(filepath='bestModelFolder/model.{epoch:02d}-{val_loss:.2f}.h5', monitor='val_loss', save_best_only=True)
-stopper = EarlyStopping(monitor='val_loss', min_delta=0.0003, patience=5)
+# stopper = EarlyStopping(monitor='val_loss', min_delta=0.0003, patience=5)
 # model.fit(callbacks=[checkpoint, stopper])
 # model.fit(X_train,y_train, validation_split=0.2, shuffle = True, epochs=10, callbacks=[checkpoint, stopper])
 model.fit_generator(train_generator,
                     steps_per_epoch=ceil(len(train_samples)/batch_size),
                     validation_data=validation_generator,
                     validation_steps=ceil(len(validation_samples)/batch_size),
-                    epochs=5, verbose=1,callbacks=[checkpoint, stopper])
+                    epochs=5, verbose=1,callbacks=[checkpoint])
 model.save('model.h5')
