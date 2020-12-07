@@ -76,22 +76,16 @@ checkpoint = ModelCheckpoint(filepath='bestModelFolder/model.{epoch:02d}-{val_lo
 # stopper = EarlyStopping(monitor='val_loss', min_delta=0.0003, patience=5)
 # model.fit(callbacks=[checkpoint, stopper])
 # model.fit(X_train,y_train, validation_split=0.2, shuffle = True, epochs=10, callbacks=[checkpoint, stopper])
-history_object = model.fit_generator(train_generator,
-                    steps_per_epoch=ceil(len(train_samples)/batch_size),
-                    validation_data=validation_generator,
-                    validation_steps=ceil(len(validation_samples)/batch_size),
-                    epochs=5, verbose=1,callbacks=[checkpoint])
 
-from keras.models import Model
-import matplotlib.pyplot as plt
-
-'''
 history_object = model.fit_generator(train_generator, samples_per_epoch =
     len(train_samples), validation_data = 
     validation_generator,
     nb_val_samples = len(validation_samples), 
     nb_epoch=5, verbose=1)
-'''
+
+
+#from keras.models import Model
+import matplotlib.pyplot as plt
 
 '''
 ./clone_v08.py:92: UserWarning: The semantics of the Keras 2 argument `steps_per_epoch` is not the same as the Keras 1 argument `samples_per_epoch`. `steps_per_epoch` is the number of batches to draw from the generator at each epoch. Basically steps_per_epoch = samples_per_epoch/batch_size. Similarly `nb_val_samples`->`validation_steps` and `val_samples`->`steps` arguments have changed. Update your method calls accordingly.
@@ -100,9 +94,14 @@ history_object = model.fit_generator(train_generator, samples_per_epoch =
   nb_epoch=5, verbose=1)
 '''
 
-history_object = model.fit_generator(train_generator,validation_data =validation_generator,
-                                     validation_steps = len(validation_samples),
-                                     epochs=5, verbose=1, steps_per_epoch=len(train_samples))
+'''
+history_object = fit_generator(
+    generator, steps_per_epoch=None, epochs=1, verbose=1, callbacks=None,
+    validation_data=None, validation_steps=None, validation_freq=1,
+    class_weight=None, max_queue_size=10, workers=1, use_multiprocessing=False,
+    shuffle=True, initial_epoch=0)
+'''
+
 
 model.save('model.h5')
 
