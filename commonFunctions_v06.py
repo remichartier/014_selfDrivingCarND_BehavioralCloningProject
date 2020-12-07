@@ -2,6 +2,10 @@ import os
 import csv
 import cv2
 
+# for loss history visualization image
+import matplotlib; matplotlib.use('agg')
+import matplotlib.pyplot as plt
+
 from scipy import ndimage
 
 # list of common functions
@@ -9,7 +13,8 @@ from scipy import ndimage
 # from commonFunctions_vxx import get_lines_logfile 
 # from commonFunctions_vxx import get_info_from_lines
 # from commonFunctions_vxx import get_info_from_logfile
-# from commonFunctions_v03 import flip_horizontally
+# from commonFunctions_vxx import flip_horizontally
+# from commonFunctions_vxx import visualize_loss_history
 # from commonFunctions_vxx import
 
 # History
@@ -20,6 +25,7 @@ from scipy import ndimage
 # v05 : add Generator Function + modify all other functions whenever necessary to use generator function ...
 # v06 : Re-start from v04 aas fit_generator and need to add generator obsolete.
 #       Latest Keras.Model.fit integrates a generator in itself.
+#        ie v06 : visualize loss history
 
 
 driving_log_file = 'driving_log.csv'
@@ -72,3 +78,15 @@ def flip_horizontally(img,meas):
         aug_img.append(cv2.flip(i,1))
         aug_meas.append(m*(-1.0))
     return aug_img,aug_meas
+
+
+def visualize_loss_history(history) :
+    ### plot the training and validation loss for each epoch
+    plt.plot(history.history['loss'])
+    plt.plot(history.history['val_loss'])
+    plt.title('model mean squared error loss')
+    plt.ylabel('mean squared error loss')
+    plt.xlabel('epoch')
+    plt.legend(['training set', 'validation set'], loc='upper right')
+    # plt.show()
+    plt.savefig('lossHistory.png')

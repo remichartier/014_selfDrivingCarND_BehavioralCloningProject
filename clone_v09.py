@@ -4,6 +4,7 @@ import cv2
 
 from commonFunctions_v06 import get_info_from_logfile
 from commonFunctions_v06 import flip_horizontally
+from commonFunctions_v06 import visualize_loss_history
 
 # History
 # v01 : Start
@@ -17,6 +18,7 @@ from commonFunctions_v06 import flip_horizontally
 # v08 : Adding loss viusalization tool
 # v09 : Re-start from v06 as fit_generator and need to add generator obsolete.
 #       Latest Keras.Model.fit integrates a generator in itself.
+#       ie v09 : Visualize loss history
 
 STEER_CORRECTION_FACTOR = 0.2 # to tune up for left and right images/measurements
 
@@ -64,16 +66,8 @@ fit(
 )
 '''
 
-
 model.save('model.h5')
 
-import matplotlib.pyplot as plt
+# save picture lossHistory.png
+visualize_loss_history(history_object)
 
-### plot the training and validation loss for each epoch
-plt.plot(history_object.history['loss'])
-plt.plot(history_object.history['val_loss'])
-plt.title('model mean squared error loss')
-plt.ylabel('mean squared error loss')
-plt.xlabel('epoch')
-plt.legend(['training set', 'validation set'], loc='upper right')
-plt.show()
