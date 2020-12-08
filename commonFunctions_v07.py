@@ -1,6 +1,7 @@
 import os
 import csv
 import cv2
+import numpy as np # for np.array() np.append()
 
 # for loss history visualization image
 import matplotlib; matplotlib.use('agg')
@@ -15,6 +16,7 @@ from scipy import ndimage
 # from commonFunctions_vxx import get_info_from_logfile
 # from commonFunctions_vxx import flip_horizontally
 # from commonFunctions_vxx import visualize_loss_history
+# from commonFunctions_vxx import RGB2YUV
 # from commonFunctions_vxx import
 
 # History
@@ -26,6 +28,7 @@ from scipy import ndimage
 # v06 : Re-start from v04 aas fit_generator and need to add generator obsolete.
 #       Latest Keras.Model.fit integrates a generator in itself.
 #        ie v06 : visualize loss history
+# v07 : For nvidia model, convert RGB to YUV
 
 
 driving_log_file = 'driving_log.csv'
@@ -90,3 +93,14 @@ def visualize_loss_history(history) :
     plt.legend(['training set', 'validation set'], loc='upper right')
     # plt.show()
     plt.savefig('lossHistory.png')
+
+def RGB2YUV(im):
+    print('RGB2YUV() : Start converting X_train from RGB to YUV. Please wait ...')
+    yuv = []
+    for i in im :
+        yuv.append(cv2.cvtColor(i, cv2.COLOR_RGB2YUV))
+    print('RGB2YUV() : Converted')
+    return yuv
+
+                        
+                        

@@ -5,6 +5,7 @@ import cv2
 from commonFunctions_v07 import get_info_from_logfile
 from commonFunctions_v07 import flip_horizontally
 from commonFunctions_v07 import visualize_loss_history
+from commonFunctions_v07 import RGB2YUV
 
 # History
 # v01 : Start
@@ -20,6 +21,7 @@ from commonFunctions_v07 import visualize_loss_history
 #       Latest Keras.Model.fit integrates a generator in itself.
 #       ie v09 : Visualize loss history
 # v10 : choose better model for self driving cars and for this simulation.
+#       Trying https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars
 
 STEER_CORRECTION_FACTOR = 0.2 # to tune up for left and right images/measurements
 
@@ -34,20 +36,48 @@ augm_images, augm_measurements = flip_horizontally(images,measurements)
 images.extend(augm_images)
 measurements.extend(augm_measurements)
 
+# Nvidia : need to convert images in YUV ...
+images = RGB2YUV(images)
+
+print('converting images to np arrays. Please wait ...')
 X_train = np.array(images)
 y_train = np.array(measurements)
+print('converting images to np arrays. Done')
 
 #print(f'X_train shape : {X_train.shape}')
 #print(f'images shape : {im.shape}')
 
 from keras.models import Sequential
-from keras.layers import Flatten, Dense, Lambda, Cropping2D
+from keras.layers import Flatten, Dense, Lambda, Cropping2D, Activation
 from keras.callbacks import ModelCheckpoint,EarlyStopping
+from keras.layers.convolutional import Conv2D
 
 model = Sequential()
 model.add(Lambda(lambda x: ((x/255) - 0.5),input_shape=(160,320,3)))
 model.add(Cropping2D(cropping=((70,25),(0,0))))
+
+# Nvidia : strided convolutions in the first three convolutional layers with a 2×2 stride and a 5×5 kernel
+# The input image is split into YUV planes and passed to the network.
+model.add(Conv2D(filters=24,kernel_size=5,strides=2,padding="valid"))
+model.add(Conv2D(filters=36,kernel_size=5,strides=2,padding="valid"))
+model.add(Conv2D(filters=48,kernel_size=5,strides=2,padding="valid"))
+# and a non-strided convolution with a 3×3 kernel size in the final two convolutional layers.
+model.add(Conv2D(filters=64,kernel_size=3,strides=1,padding="valid"))
+model.add(Conv2D(filters=64,kernel_size=3,strides=1,padding="valid"))
+# follow the five convolutional layers with three fully connected layers, 
+# leading to a final output control value which is the inverse-turning-radius. 
+model.add(Dropout(0.5))
+model.add(Activation('relu'))
 model.add(Flatten())
+model.add(Dense(100))
+model.add(Dropout(0.5))
+model.add(Activation('relu'))
+model.add(Dense(50))
+model.add(Dropout(0.5))
+model.add(Activation('relu'))
+model.add(Dense(10))
+model.add(Dropout(0.5))
+model.add(Activation('relu'))
 model.add(Dense(1))
 
 model.compile(loss='mse', optimizer='adam')
