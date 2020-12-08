@@ -48,7 +48,7 @@ print('converting images to np arrays. Done')
 #print(f'images shape : {im.shape}')
 
 from keras.models import Sequential
-from keras.layers import Flatten, Dense, Lambda, Cropping2D, Activation
+from keras.layers import Flatten, Dense, Lambda, Cropping2D, Activation, Dropout
 from keras.callbacks import ModelCheckpoint,EarlyStopping
 from keras.layers.convolutional import Conv2D
 
