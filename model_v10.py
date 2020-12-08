@@ -83,7 +83,7 @@ model.add(Dense(1))
 model.compile(loss='mse', optimizer='adam')
 # Callbacks to save best model and prevent overfit by early stopping 
 checkpoint = ModelCheckpoint(filepath='bestModelFolder/model.{epoch:02d}-{val_loss:.2f}.h5', monitor='val_loss', save_best_only=True)
-stopper = EarlyStopping(monitor='val_loss', min_delta=0.0003, patience=10)
+stopper = EarlyStopping(monitor='val_loss', min_delta=0.0003, patience=3)
 # model.fit(callbacks=[checkpoint, stopper])
 history_object = model.fit(X_train,y_train, batch_size, validation_split=0.2, shuffle = True, epochs=10, callbacks=[checkpoint, stopper])
 
