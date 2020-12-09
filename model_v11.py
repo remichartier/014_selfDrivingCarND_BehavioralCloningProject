@@ -22,27 +22,32 @@ from commonFunctions_v08 import RGB2YUV
 #       ie v09 : Visualize loss history
 # v10 : choose better model for self driving cars and for this simulation.
 #       Trying https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars
+# v11 : test on GPU on all samples
 
 STEER_CORRECTION_FACTOR = 0.2 # to tune up for left and right images/measurements
 
 # Set our batch size for fit generator
-batch_size=32
+batch_size= 128 #32
 
 # get images + steering angle measurements
-images, measurements = get_info_from_logfile(STEER_CORRECTION_FACTOR,nb_images=100)
+images, measurements = get_info_from_logfile(STEER_CORRECTION_FACTOR) #,nb_images=100)
 
 # data augmentation flip horizontally image + inverse measurements
+print('Data augmentation : flip_horizontally(). Please wait ...')
 augm_images, augm_measurements = flip_horizontally(images,measurements)
 images.extend(augm_images)
 measurements.extend(augm_measurements)
+print('Data augmentation : flip_horizontally(). Done.')
 
 # Nvidia : need to convert images in YUV ...
+print('Convert images to YUV for NVidia model. Please wait ...')
 images = RGB2YUV(images)
+print('Convert images to YUV for NVidia model. Done.')
 
-print('converting images to np arrays. Please wait ...')
+print('Converting images to np arrays. Please wait ...')
 X_train = np.array(images)
 y_train = np.array(measurements)
-print('converting images to np arrays. Done')
+print('Converting images to np arrays. Done')
 
 #print(f'X_train shape : {X_train.shape}')
 #print(f'images shape : {im.shape}')
@@ -52,6 +57,7 @@ from keras.layers import Flatten, Dense, Lambda, Cropping2D, Activation, Dropout
 from keras.callbacks import ModelCheckpoint,EarlyStopping
 from keras.layers.convolutional import Conv2D
 
+print('Build Model. Please wait ...')
 model = Sequential()
 model.add(Lambda(lambda x: ((x/255) - 0.5),input_shape=(160,320,3)))
 model.add(Cropping2D(cropping=((70,25),(0,0))))
@@ -79,13 +85,19 @@ model.add(Dense(10))
 model.add(Dropout(0.5))
 model.add(Activation('relu'))
 model.add(Dense(1))
+print('Build Model. Done ...')
 
+print('Model.compile(). Please wait ...')
 model.compile(loss='mse', optimizer='adam')
+print('Model.compile(). Done.')
 # Callbacks to save best model and prevent overfit by early stopping 
 checkpoint = ModelCheckpoint(filepath='bestModelFolder/model.{epoch:02d}-{val_loss:.2f}.h5', monitor='val_loss', save_best_only=True)
 stopper = EarlyStopping(monitor='val_loss', min_delta=0.0003, patience=3)
 # model.fit(callbacks=[checkpoint, stopper])
+print('Model.fit(). Please wait ...')
 history_object = model.fit(X_train,y_train, batch_size, validation_split=0.2, shuffle = True, epochs=10, callbacks=[checkpoint, stopper])
+print('Model.fit(). Done.')
+
 
 '''
 fit(
@@ -96,9 +108,9 @@ fit(
     max_queue_size=10, workers=1, use_multiprocessing=False
 )
 '''
-
+print('Saving model parameters. Please wait ...')
 model.save('model.h5')
-
+print('Saving model parameters. Done.')
 # save picture lossHistory.png
 visualize_loss_history(history_object)
 
