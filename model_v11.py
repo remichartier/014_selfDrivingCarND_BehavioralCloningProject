@@ -27,7 +27,7 @@ from commonFunctions_v08 import RGB2YUV
 STEER_CORRECTION_FACTOR = 0.2 # to tune up for left and right images/measurements
 
 # Set our batch size for fit generator
-batch_size= 128 #32
+batch_size= 32
 
 # get images + steering angle measurements
 images, measurements = get_info_from_logfile(STEER_CORRECTION_FACTOR) #,nb_images=100)
