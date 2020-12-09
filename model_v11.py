@@ -100,7 +100,7 @@ print_info('Model.compile(). Please wait ...')
 model.compile(loss='mse', optimizer='adam')
 print_info('Model.compile(). Done.')
 # Callbacks to save best model and prevent overfit by early stopping 
-checkpoint = ModelCheckpoint(filepath='bestModelFolder/model.{epoch:02d}-{val_loss:.2f}.h5', monitor='val_loss', save_best_only=True)
+checkpoint = ModelCheckpoint(filepath='bestModelFolder/model.{epoch:02d}-{val_loss:.3f}.h5', monitor='val_loss', save_best_only=True)
 #stopper = EarlyStopping(monitor='val_loss', min_delta=0.0003, patience=3)
 # model.fit(callbacks=[checkpoint, stopper])
 print_info('Model.fit(). Please wait ...')

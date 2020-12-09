@@ -32,7 +32,7 @@ from scipy import ndimage
 #       Latest Keras.Model.fit integrates a generator in itself.
 #        ie v06 : visualize loss history
 # v07 : For nvidia model, convert RGB to YUV
-# v08 : add log_info() to print debug/progress info
+# v08 : add print_info() to print debug/progress info
 
 
 driving_log_file = 'driving_log.csv'
@@ -55,8 +55,6 @@ def get_lines_logfile() :
             l.append(line)
     return l
 
-def print_info(info):
-    print(f'{info}. Time : {datetime.now().strftime("%H:%M:%S")}')
  
 def get_info_from_lines(l,leftright_steer_corr,nb_images=None) :
     imgs = []
@@ -104,5 +102,10 @@ def RGB2YUV(im):
         yuv.append(cv2.cvtColor(i, cv2.COLOR_RGB2YUV))
     return yuv
 
-                       
+def print_info(info):
+    now = datetime.now()
+    infotime = now.strftime("%H:%M:%S")
+    # can not use f-string due to GPU python version v3.5.2
+    print('{}. Time : {}'.format(info,infotime))
+    
                         
