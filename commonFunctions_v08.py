@@ -2,6 +2,8 @@ import os
 import csv
 import cv2
 import numpy as np # for np.array() np.append()
+from datetime import datetime # print timestamps
+
 
 # for loss history visualization image
 import matplotlib; matplotlib.use('agg')
@@ -17,6 +19,7 @@ from scipy import ndimage
 # from commonFunctions_vxx import flip_horizontally
 # from commonFunctions_vxx import visualize_loss_history
 # from commonFunctions_vxx import RGB2YUV
+# from commonFunctions_vxx import print_info
 # from commonFunctions_vxx import
 
 # History
@@ -29,6 +32,7 @@ from scipy import ndimage
 #       Latest Keras.Model.fit integrates a generator in itself.
 #        ie v06 : visualize loss history
 # v07 : For nvidia model, convert RGB to YUV
+# v08 : add log_info() to print debug/progress info
 
 
 driving_log_file = 'driving_log.csv'
@@ -51,12 +55,13 @@ def get_lines_logfile() :
             l.append(line)
     return l
 
-
+def print_info(info):
+    print(f'{info}. Time : {datetime.now().strftime("%H:%M:%S")}')
+ 
 def get_info_from_lines(l,leftright_steer_corr,nb_images=None) :
     imgs = []
     meas = []
     log_path = get_log_path()
-    print('Function get_info_from_lines() : Load images ... Please wait ....')
     for line in l[1:nb_images] :
         #image = cv2.imread(log_path + line[0].strip())
         for i in range(3) :         # center image, left , right images
@@ -68,7 +73,6 @@ def get_info_from_lines(l,leftright_steer_corr,nb_images=None) :
         meas.append(measurement)
         measurement -= leftright_steer_corr # right image
         meas.append(measurement)
-    print('Function get_info_from_lines() : Images loaded')
     return imgs,meas
 
 def get_info_from_logfile(leftright_steer_correction,nb_images=None) :
@@ -95,12 +99,10 @@ def visualize_loss_history(history) :
     plt.savefig('lossHistory.png')
 
 def RGB2YUV(im):
-    print('RGB2YUV() : Start converting X_train from RGB to YUV. Please wait ...')
     yuv = []
     for i in im :
         yuv.append(cv2.cvtColor(i, cv2.COLOR_RGB2YUV))
-    print('RGB2YUV() : Converted')
     return yuv
 
-                        
+                       
                         
