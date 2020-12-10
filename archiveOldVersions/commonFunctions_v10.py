@@ -33,8 +33,9 @@ from scipy import ndimage
 #        ie v06 : visualize loss history
 # v07 : For nvidia model, convert RGB to YUV
 # v08 : add print_info() to print debug/progress info
-# v12 : Try to avoid list to numpy conversion, taking few minutes, start with numpy image array straight from start
-
+# v09 : Try to avoid list to numpy conversion, taking few minutes, start with numpy image array straight from start
+#       But failed. Need to use and adapt to Generator
+# v10 : adapt to generator_02.py
 
 
 driving_log_file = 'driving_log.csv'
@@ -62,19 +63,9 @@ def get_info_from_lines(l,leftright_steer_corr,nb_images=None) :
     imgs = []
     meas = []
     
-    log_path = get_log_path()
-    first_im=ndimage.imread(log_path + l[1][0].strip())
-    row,col,channel = first_im.shape
-    print('image shape : {}'.format(first_im.shape))
-    np_imgs = None
-    nb = 2*len(l)
-    print('nb : {}'.format(nb))
-    np_imgs = np.zeros((nb,row,col,channel))
+    log_path = get_log_path()    
     
-    print('Size np_imgs : {}'.format(np_imgs.shape))
-    
-    
-    for line in l[1:nb_images] :
+    for line in l[:nb_images] :
         #image = cv2.imread(log_path + line[0].strip())
         for i in range(3) :         # center image, left , right images
             image = ndimage.imread(log_path + line[i].strip())
