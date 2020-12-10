@@ -3,11 +3,11 @@ import numpy as np
 import cv2
 
 
-from commonFunctions_v08 import get_info_from_logfile
-from commonFunctions_v08 import flip_horizontally
-from commonFunctions_v08 import visualize_loss_history
-from commonFunctions_v08 import RGB2YUV
-from commonFunctions_v08 import print_info
+from commonFunctions_v09 import get_info_from_logfile
+from commonFunctions_v09 import flip_horizontally
+from commonFunctions_v09 import visualize_loss_history
+from commonFunctions_v09 import RGB2YUV
+from commonFunctions_v09 import print_info
 
 # History
 # v01 : Start
@@ -26,16 +26,17 @@ from commonFunctions_v08 import print_info
 #       Trying https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars
 # v11 : test on GPU on all samples - fail on hard curve. best model after 5 epochs.
 #       20201209_1247_Epoch05Modelv11ValidLoss0_013.h5
+# v12 : Try to avoid list to numpy conversion, taking few minutes, start with numpy image array straight from start
 
 STEER_CORRECTION_FACTOR = 0.2 # to tune up for left and right images/measurements
 
 # Set our batch size for fit generator
 batch_size= 32
-dropout_rate = 0.5
+#dropout_rate = 0.5
 
 # get images + steering angle measurements
 print_info('Function get_info_from_lines() : Load images ... Please wait ....')
-images, measurements = get_info_from_logfile(STEER_CORRECTION_FACTOR) #,nb_images=10)
+images, measurements = get_info_from_logfile(STEER_CORRECTION_FACTOR,nb_images=10)
 print_info('Function get_info_from_lines() : Images loaded')
 
 # data augmentation flip horizontally image + inverse measurements
@@ -102,7 +103,7 @@ model.compile(loss='mse', optimizer='adam')
 print_info('Model.compile(). Done.')
 # Callbacks to save best model and prevent overfit by early stopping 
 checkpoint = ModelCheckpoint(filepath='bestModelFolder/model.{epoch:02d}-{val_loss:.3f}.h5', monitor='val_loss', save_best_only=True)
-#stopper = EarlyStopping(monitor='val_loss', min_delta=0.0003, patience=3)
+stopper = EarlyStopping(monitor='val_loss', min_delta=0.0003, patience=5)
 # model.fit(callbacks=[checkpoint, stopper])
 print_info('Model.fit(). Please wait ...')
 history_object = model.fit(X_train,y_train, batch_size, validation_split=0.2, shuffle = True, epochs=10, callbacks=[checkpoint]) #, stopper])
