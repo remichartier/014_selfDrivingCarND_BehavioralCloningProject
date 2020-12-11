@@ -6,6 +6,8 @@
 #       Start adding again everything from model_v12.py (image augmentation)
 # v03 : migrate model from model_v12.py to generator_v03.py, tested on GPU ok.
 #       Just need 6 or 7 epochs, not more.
+# v04 : Add functionality to load different data collections
+#       + add data Last Hard Turn
 
 import os
 import csv
@@ -15,16 +17,22 @@ import numpy as np
 from math import ceil
 from sklearn.model_selection import train_test_split
 
-from commonFunctions_v11 import get_lines_logfile 
-from commonFunctions_v11 import generator
-from commonFunctions_v11 import batch_len
-from commonFunctions_v11 import print_info
-from commonFunctions_v11 import visualize_loss_history
+from commonFunctions_v12 import get_lines_logfile 
+from commonFunctions_v12 import generator
+from commonFunctions_v12 import batch_len
+from commonFunctions_v12 import print_info
+from commonFunctions_v12 import visualize_loss_history
+from commonFunctions_v12 import get_log_pathSampleData
 
-# Reading CSV file, extracting lines.
-samples = get_lines_logfile()
+path_last_hard_turn_data = "./simulationData/002_hardLeftTurn20201208_0220/"
 
-train_samples, validation_samples = train_test_split(samples[1:], test_size=0.2)
+# Reading CSV file FROM SAMPLE DATA, extracting lines.
+samples = get_lines_logfile(get_log_pathSampleData())
+# Reading CSV file from Last Hard Turn, extracting lines
+# add them to samples lines.
+samples.extend(get_lines_logfile(path_last_hard_turn_data))
+
+train_samples, validation_samples = train_test_split(samples, test_size=0.2)
 
 # Set our batch size (*3 due to image center + left + right ....), then *2 due to flip of each images
 batch_size=batch_len*3*2  #6*3*2 = 36 ....
