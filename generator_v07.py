@@ -47,7 +47,7 @@ samples.extend(get_lines_logfile(path_003_OwnRecordingOneLapAntiClockwise))
 # Reading CSV file from 004_ownRecordOneLapClockwise, extracting lines
 # add them to samples lines.
 samples.extend(get_lines_logfile(path_004_ownRecordOneLapClockwise))
-samples.extend(get_lines_logfile(005_OwnRecordingOneLapAntiClockwise))
+samples.extend(get_lines_logfile(path_005_ownRecordOneLapClockwise))
 
 train_samples, validation_samples = train_test_split(samples, test_size=0.2)
 
