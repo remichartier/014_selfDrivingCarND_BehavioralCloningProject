@@ -14,7 +14,7 @@
 #     : add 1 more lap I drive myself 003_OwnRecordingOneLapAntiClockwise
 # v07 : increase epochs to 7
 #       add 1 more lap I drive myself 004_ownRecordOneLapClockwise
-        
+#        add 1 more lap I drive myself 005_ownRecordOneLapAntiClockwise
 
 import os
 import csv
@@ -34,6 +34,7 @@ from commonFunctions_v12 import get_log_pathSampleData
 path_last_hard_turn_data = "./simulationData/002_hardLeftTurn20201208_0220/"
 path_003_OwnRecordingOneLapAntiClockwise = "./simulationData/003_OwnRecordingOneLapAntiClockwise/"
 path_004_ownRecordOneLapClockwise = "./simulationData/004_ownRecordOneLapClockwise/"
+path_005_ownRecordOneLapClockwise = "./simulationData/005_ownRecordOneLapAntiClockwise/"
 
 # Reading CSV file FROM SAMPLE DATA, extracting lines.
 samples = get_lines_logfile(get_log_pathSampleData())
@@ -46,7 +47,7 @@ samples.extend(get_lines_logfile(path_003_OwnRecordingOneLapAntiClockwise))
 # Reading CSV file from 004_ownRecordOneLapClockwise, extracting lines
 # add them to samples lines.
 samples.extend(get_lines_logfile(path_004_ownRecordOneLapClockwise))
-
+samples.extend(get_lines_logfile(005_OwnRecordingOneLapAntiClockwise))
 
 train_samples, validation_samples = train_test_split(samples, test_size=0.2)
 
@@ -115,7 +116,7 @@ history_object = model.fit_generator(train_generator,
             steps_per_epoch=ceil(len(train_samples)/batch_size), 
             validation_data=validation_generator, 
             validation_steps=ceil(len(validation_samples)/batch_size), 
-            epochs=4, verbose=1, callbacks=[checkpoint]) #, stopper])
+            epochs=6, verbose=1, callbacks=[checkpoint]) #, stopper])
 
 print_info('Saving model parameters. Please wait ...')
 model.save('model.h5')
