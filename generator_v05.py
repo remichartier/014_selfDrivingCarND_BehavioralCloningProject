@@ -9,6 +9,7 @@
 # v04 : Add functionality to load different data collections
 #       + add data Last Hard Turn
 # v05 : Load previous model, transfer learning from best previous model
+#       model.load_weights("20201209_1247_Epoch05Modelv11ValidLoss0_013.h5")
 
 import os
 import csv
@@ -49,6 +50,7 @@ from keras.layers.convolutional import Conv2D
 from keras.callbacks import ModelCheckpoint,EarlyStopping
 print_info('Import Keras Models. Done.')
 
+
 print_info('Build Model. Please wait ...')
 model = Sequential()
 model.add(Lambda(lambda x: ((x/255) - 0.5),input_shape=(160,320,3)))
@@ -82,6 +84,16 @@ print_info('Build Model. Done ...')
 print_info('Model.compile(). Please wait ...')
 model.compile(loss='mse', optimizer='adam')
 print_info('Model.compile(). Done.')
+
+
+# reload previous model
+import keras
+print_info('load_weights(). Please wait ...')
+# model=keras.models.load_model("20201209_1247_Epoch05Modelv11ValidLoss0_013.h5")
+model.load_weights("20201209_1247_Epoch05Modelv11ValidLoss0_013.h5")
+print_info('load_weights(). Done.')
+
+
 # Callbacks to save best model and prevent overfit by early stopping 
 checkpoint = ModelCheckpoint(filepath='bestModelFolder/model.{epoch:02d}-Loss{loss:.4f}-valLoss{val_loss:.4f}.h5', monitor='val_loss', save_best_only=False)
 stopper = EarlyStopping(monitor='val_loss', min_delta=0.0003, patience=5)
