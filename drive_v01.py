@@ -16,7 +16,8 @@ from keras.models import load_model
 import h5py
 from keras import __version__ as keras_version
 
-from commonFunctions_v13 import RGB2YUV
+# from commonFunctions_v13 import RGB2YUV
+import cv2
 
 
 sio = socketio.Server()
@@ -68,7 +69,8 @@ def telemetry(sid, data):
         # Apparently image is in RGB format..."drive.py uses RGB"
         # 1. need to convert to YUV and do the same pre-processing as when submitting image to the model ....
         
-        images = RGB2YUV(images)
+        # image_array = RGB2YUV(image_array)
+        image_array = cv2.cvtColor(image_array, cv2.COLOR_RGB2YUV)
             
         # trim image to only see section with road --> Done directly in the model
         # NORMALISATION : done directly in the model. So I just need to input YUV image 
