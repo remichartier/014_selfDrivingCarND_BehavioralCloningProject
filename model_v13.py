@@ -134,7 +134,7 @@ history_object = model.fit_generator(train_generator,
             steps_per_epoch=ceil(len(train_samples)/batch_size), 
             validation_data=validation_generator, 
             validation_steps=ceil(len(validation_samples)/batch_size), 
-            epochs=10, verbose=1, callbacks=[checkpoint]) #, stopper])
+            epochs=7, verbose=1, callbacks=[checkpoint]) #, stopper])
 
 print_info('Saving model parameters. Please wait ...')
 model.save('model.h5')

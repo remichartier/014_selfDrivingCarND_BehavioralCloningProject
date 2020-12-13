@@ -23,6 +23,7 @@ import sklearn
 # from commonFunctions_vxx import visualize_loss_history
 # from commonFunctions_vxx import RGB2YUV
 # from commonFunctions_vxx import print_info
+# from commonFunctions_vxx import BGR2YUV
 # from commonFunctions_vxx import
 
 # History
@@ -44,6 +45,7 @@ import sklearn
 # v13 : Correct image format read. imread() reads BGR, remove nd.image (supposed
 #       to convert to RGB but did not use right parameter.
 #       And anyway drive.py needs to be modified to get YUV images to enter the model.
+#       Add BGR2YUV for drive_vxx.py 
 
 driving_log_file = 'driving_log.csv'
 STEER_CORRECTION_FACTOR = 0.2 # to tune up for left and right images/measurements
