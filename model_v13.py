@@ -22,7 +22,8 @@
 # Renamed model_v13.py
 # v13 : try to fix conversion issue BGR --> RGB --> YUV. Remove RGB which I think
 #       was not doing it anyway because lacked mode option in nd.image().
-
+#       - Back to only the Sample data as first step after fixing Image Format conversion issues
+#       in commonFunctions and in drive.py 
 
 import os
 import csv
@@ -51,16 +52,16 @@ path_007_trainHardTurnSeveralTimes = "./simulationData/007_trainHardTurnSeveralT
 samples = get_lines_logfile(get_log_pathSampleData())
 # Reading CSV file from Last Hard Turn, extracting lines
 # add them to samples lines.
-samples.extend(get_lines_logfile(path_last_hard_turn_data))
+#samples.extend(get_lines_logfile(path_last_hard_turn_data))
 # Reading CSV file from 003_OwnRecordingOneLapAntiClockwise, extracting lines
 # add them to samples lines.
-samples.extend(get_lines_logfile(path_003_OwnRecordingOneLapAntiClockwise))
+#samples.extend(get_lines_logfile(path_003_OwnRecordingOneLapAntiClockwise))
 # Reading CSV file from 004_ownRecordOneLapClockwise, extracting lines
 # add them to samples lines.
-samples.extend(get_lines_logfile(path_004_ownRecordOneLapClockwise))
+#samples.extend(get_lines_logfile(path_004_ownRecordOneLapClockwise))
 #samples.extend(get_lines_logfile(path_005_ownRecordOneLapAntiClockwise))
-samples.extend(get_lines_logfile(path_006_OwnRecord2LapsRecoverSidesAntiClockwise))
-samples.extend(get_lines_logfile(path_007_trainHardTurnSeveralTimes))
+#samples.extend(get_lines_logfile(path_006_OwnRecord2LapsRecoverSidesAntiClockwise))
+#samples.extend(get_lines_logfile(path_007_trainHardTurnSeveralTimes))
 
 
 train_samples, validation_samples = train_test_split(samples, test_size=0.2)
