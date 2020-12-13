@@ -109,8 +109,9 @@ print_info('Model.compile(). Done.')
 # reload previous model
 import keras
 print_info('load_weights(). Please wait ...')
-model.load_weights("20201209_1247_Epoch05Modelv11ValidLoss0_013.h5")
+#model.load_weights("20201209_1247_Epoch05Modelv11ValidLoss0_013.h5")
 #model.load_weights("20201212_0030_Epoch3GeneratorV06Loss0_0131Val0_0155AfterOwnRecordLapAntiClock003.h5")
+model.load_weights("20201212_2245_model.04-Loss0.0302-valLoss0.0317SamplePlusSideRecoverDrivePretrained.h5")
 print_info('load_weights(). Done.')
 
 
