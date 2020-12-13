@@ -18,6 +18,8 @@
 # v08 : back to Sample data without adding  recording.
 #       Add side corrections to center line.
 # v09 : add clockwise Lap + anticlockwise Lap, use pre-trained weights.
+#       add problematic curve recording several times.
+
 
 import os
 import csv
@@ -39,12 +41,14 @@ path_003_OwnRecordingOneLapAntiClockwise = "./simulationData/003_OwnRecordingOne
 path_004_ownRecordOneLapClockwise = "./simulationData/004_ownRecordOneLapClockwise/"
 path_005_ownRecordOneLapAntiClockwise = "./simulationData/005_ownRecordOneLapAntiClockwise/"
 path_006_OwnRecord2LapsRecoverSidesAntiClockwise = "./simulationData/006_OwnRecord2LapsRecoverSidesAntiClockwise/"
+path_007_trainHardTurnSeveralTimes = "./simulationData/007_trainHardTurnSeveralTimes/"
+
 
 # Reading CSV file FROM SAMPLE DATA, extracting lines.
 samples = get_lines_logfile(get_log_pathSampleData())
 # Reading CSV file from Last Hard Turn, extracting lines
 # add them to samples lines.
-#samples.extend(get_lines_logfile(path_last_hard_turn_data))
+samples.extend(get_lines_logfile(path_last_hard_turn_data))
 # Reading CSV file from 003_OwnRecordingOneLapAntiClockwise, extracting lines
 # add them to samples lines.
 samples.extend(get_lines_logfile(path_003_OwnRecordingOneLapAntiClockwise))
@@ -53,6 +57,8 @@ samples.extend(get_lines_logfile(path_003_OwnRecordingOneLapAntiClockwise))
 samples.extend(get_lines_logfile(path_004_ownRecordOneLapClockwise))
 #samples.extend(get_lines_logfile(path_005_ownRecordOneLapAntiClockwise))
 samples.extend(get_lines_logfile(path_006_OwnRecord2LapsRecoverSidesAntiClockwise))
+samples.extend(get_lines_logfile(path_007_trainHardTurnSeveralTimes))
+
 
 train_samples, validation_samples = train_test_split(samples, test_size=0.2)
 
@@ -111,7 +117,9 @@ import keras
 print_info('load_weights(). Please wait ...')
 #model.load_weights("20201209_1247_Epoch05Modelv11ValidLoss0_013.h5")
 #model.load_weights("20201212_0030_Epoch3GeneratorV06Loss0_0131Val0_0155AfterOwnRecordLapAntiClock003.h5")
-model.load_weights("20201212_2245_model.04-Loss0.0302-valLoss0.0317SamplePlusSideRecoverDrivePretrained.h5")
+#model.load_weights("20201212_2245_model.04-Loss0.0302-valLoss0.0317SamplePlusSideRecoverDrivePretrained.h5")
+model.load_weights("20201213_1226_model.10-Loss0.0143-valLoss0.0316SampleClockAnticlockRecoverSides.h5")
+
 print_info('load_weights(). Done.')
 
 
