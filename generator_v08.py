@@ -36,7 +36,8 @@ from commonFunctions_v12 import get_log_pathSampleData
 path_last_hard_turn_data = "./simulationData/002_hardLeftTurn20201208_0220/"
 path_003_OwnRecordingOneLapAntiClockwise = "./simulationData/003_OwnRecordingOneLapAntiClockwise/"
 path_004_ownRecordOneLapClockwise = "./simulationData/004_ownRecordOneLapClockwise/"
-path_005_ownRecordOneLapClockwise = "./simulationData/005_ownRecordOneLapAntiClockwise/"
+path_005_ownRecordOneLapAntiClockwise = "./simulationData/005_ownRecordOneLapAntiClockwise/"
+path_006_OwnRecord2LapsRecoverSidesAntiClockwise = "./simulationData/006_OwnRecord2LapsRecoverSidesAntiClockwise/"
 
 # Reading CSV file FROM SAMPLE DATA, extracting lines.
 samples = get_lines_logfile(get_log_pathSampleData())
@@ -49,7 +50,8 @@ samples = get_lines_logfile(get_log_pathSampleData())
 # Reading CSV file from 004_ownRecordOneLapClockwise, extracting lines
 # add them to samples lines.
 #samples.extend(get_lines_logfile(path_004_ownRecordOneLapClockwise))
-#samples.extend(get_lines_logfile(path_005_ownRecordOneLapClockwise))
+#samples.extend(get_lines_logfile(path_005_ownRecordOneLapAntiClockwise))
+samples.extend(get_lines_logfile(path_006_OwnRecord2LapsRecoverSidesAntiClockwise))
 
 train_samples, validation_samples = train_test_split(samples, test_size=0.2)
 
