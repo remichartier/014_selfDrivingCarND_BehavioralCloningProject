@@ -15,6 +15,7 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
+[image8]: ./writeupReportMaterials/Nvidia_cnn-architecture-624x890.png "NVidia Model Visualization"
 [image1]: ./examples/placeholder.png "Model Visualization"
 [image2]: ./examples/placeholder.png "Grayscaling"
 [image3]: ./examples/placeholder_small.png "Recovery Image"
@@ -53,8 +54,11 @@ The model_01.py file contains the code for training and saving the convolution n
 
 I followed the Nvidia model as mentioned in the project courses, as it was said to be working for this kind of project. This Nvidia model is described in this paper : [https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars](https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars).
 
+The model is implemented in model_v14.py lines 88 to 114.
+
 I took the general architecture of the model and adapted to our purpose here. Following this achitecture : 
 
+![alt text][image8]
 
 My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24) 
 
