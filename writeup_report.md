@@ -15,6 +15,8 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
+[image8]: ./writeupReportMaterials/Nvidia_cnn-architecture-624x890.png "NVidia Model Visualization"
+[image9]: ./writeupReportMaterials/epochsTrainingExemple.png "Epochs Training"
 [image1]: ./examples/placeholder.png "Model Visualization"
 [image2]: ./examples/placeholder.png "Grayscaling"
 [image3]: ./examples/placeholder_small.png "Recovery Image"
@@ -53,18 +55,36 @@ The model_01.py file contains the code for training and saving the convolution n
 
 I followed the Nvidia model as mentioned in the project courses, as it was said to be working for this kind of project. This Nvidia model is described in this paper : [https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars](https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars).
 
+The model is implemented in model_v14.py lines 88 to 114.
+
 I took the general architecture of the model and adapted to our purpose here. Following this achitecture : 
 
+![alt text][image8]
 
-My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24) 
+This model consists of a 5 successive convolution neural network layers, 3 first CNN layers with 5x5 filter size, 2 last CNN layers with 3x3 filter sizes, each CNN layer having different depths : 24, 36, 48, 64, 64 (model_v14.py lines 94-99).
 
-The model includes RELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using a Keras lambda layer (code line 18). 
+The CNN layers are followed by a flatten layer, and then 3 fully-connected layers reduce number of neurons from 100 to 50 to 10 and then to 1 neuron representing the steering control value of the car (model_v14.py lines 104-114). 
+
+The model includes several RELU layers to introduce nonlinearity (code lines 103,107,110,113) within the fully-connected layers, and the data is normalized in the model using a Keras lambda layer (code line 89). 
 
 #### 2. Attempts to reduce overfitting in the model
 
-The model contains dropout layers in order to reduce overfitting (model.py lines 21). 
+The model contains several dropout layers in order to reduce overfitting (model_v14.py lines 102,106,109,112).
 
-The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 10-16). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+The other method used to prevent overfitting is to run several epochs, save each epoch model, and select the model for the epoch in which the loss and validation loss are trending down and not up.
+
+- Saving each model is done via using callback in the model.fit_generator(), cf model_v14.py lines 134 and 140.
+- One such exemple of training with many epochs is shown below. At the end, I selected model parameters built after epoch #09 to reduce overfitting.
+
+![alt text][image9]
+
+My current submission for this project only train and validate the model based on the sample data provided for this project and is only for a proof of concept.
+
+However, in the course of testing the project, I developped also a system to train and validate on several other additional data inputs (images + steering values), cf model_v14.py lines 45-66.
+
+I used those thouroughfully to train and test different scenarios, however I was not seing improvements due to another issue I had not identified at that time. After finding this issue and fixing it, I just relied on the basic sample data provided with the project to validate the model and code to prove this concept is working, that is why the other data I collected is not used for this submission, but could be if I had more time to play with it. It could be used as well to prevent overfitting on the basic sample data.
+
+But even with sample data provided with the project, the model was trained and validated, and chosen to not overfit by selecting parameters trained on epoch #09. The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track (cf the provided video.mp4).
 
 #### 3. Model parameter tuning
 
