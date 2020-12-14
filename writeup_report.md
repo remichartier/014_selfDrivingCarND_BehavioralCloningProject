@@ -60,7 +60,9 @@ I took the general architecture of the model and adapted to our purpose here. Fo
 
 ![alt text][image8]
 
-My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24) 
+This model consists of a 5 successive convolution neural network layers, 3 first CNN layers with 5x5 filter size, 2 last CNN layers with 3x3 filter sizes, each CNN layer having different depths : 24, 36, 48, 64, 64 (model_v14.py lines 94-99).
+
+The CNN layers are followed by a flatten layer, and then 3 fully-connected layers 
 
 The model includes RELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using a Keras lambda layer (code line 18). 
 
