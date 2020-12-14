@@ -136,4 +136,4 @@ How the model was trained, what the characteristics of the dataset are. Info how
 - learning transfer model_V14.py line 129.
 - mistakes done.
 - batch size.
-- 
+- Explain process : coded everything, tested, problems curve, added training in different phases, read articles, found clue, fix issue, train on sample data, submit project.
