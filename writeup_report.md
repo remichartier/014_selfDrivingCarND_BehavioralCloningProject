@@ -88,6 +88,8 @@ In terms of pre-processing, I also followed recommendations both from the Projec
 
 The model contains several dropout layers in order to reduce overfitting (model_v14.py lines 102,106,109,112).
 
+I am spliting data after shuffling all data input, between training data and validation data (train/validation split of 0.2, model_v14.py line 69) in order to measure over/under fitting of the data via model.fit_generator() line 136.
+
 The other method used to prevent overfitting is to run several epochs, save each epoch model, and select the model in which the epoch  loss and validation loss are trending down and not up.
 
 - Saving each model is done via using callback in the model.fit_generator(), cf model_v14.py lines 134 and 140.
@@ -127,4 +129,11 @@ I also used 2 strategies suggested in the project course to reduce overfitting b
   - I added both left and right image to the training, with a steering correction of +/- 0.2 vs center image steering value. (code in commonFunctions_v13.py lines 92-103, and 158).
 2 I flipped all images (center/left/right) and inversed corresponging steering values associate with each image, as a way to augment data to reduce overfitting. (code in commonFunctions_v13.py lines 110-115 and model_v14.py lines 160-162)
 
+#### 5. Creation of training dataset and training process documented 
+How the model was trained, what the characteristics of the dataset are. Info how the dataset was generated , exemples of images from the dataset must be included.
 
+- saving model.
+- learning transfer model_V14.py line 129.
+- mistakes done.
+- batch size.
+- 
