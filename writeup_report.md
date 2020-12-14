@@ -49,7 +49,7 @@ python drive_01.py model.h5
 
 #### 3. Submission code is usable and readable
 
-The model_01.py file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
+The model_v14.py and commonFunctions_v13.py files contain the code for training and saving the convolution neural network. More specifically, file model_v14.py shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
 
 ### Model Architecture and Training Strategy
 
@@ -71,8 +71,14 @@ The model includes several RELU layers to introduce nonlinearity (code lines 103
 
 In terms of pre-processing, I also followed recommendations both from the Project course introduction as well as from the Nvidia model used, and those steps consist of : 
 
-- model_v14.py : 
-  - 
+- While training and testing the model :
+  - Taking each image coming via cv2.imread() in BGR format 
+  - Converting to YUV format which is the input format for the Nvidia model (using function BGR2YUV() line 167 generator() function in commonFunctions_v13.py
+  - Cropping the top and bottom of images to exclude the hood of the car and the horizon which will help focus the training the road elements and discard anything above the road level. This cropping processing is fully integrated in the Keras model pipeline (model_v14.py line 90)
+- While simulating the model with the simulator :
+  - Taking each image coming from the simulator in RGB format.
+  - converting to YUV format to be in the same format as the training was done for the Nvidia model, this conversion RGB to YUV is done in drive_01.py line 72.
+  
 
 #### 2. Attempts to reduce overfitting in the model
 
