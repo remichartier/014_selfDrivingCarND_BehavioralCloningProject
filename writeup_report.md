@@ -32,18 +32,26 @@ My project includes the following files:
 * drive_01.py for driving the car in autonomous mode
 * commonFunctions_v13.py for gathering all the functions needed by model_v14.py including generator function. 
 * model.h5 containing a trained convolution neural network 
-* writeup_report.md or writeup_report.pdf summarizing the results
+* writeup_report.md summarizing the results
 * video.mp4 to show model trained allows car to drive autonomously on 1st track of the simulator 
 
 #### 2. Submission includes functional code
-Using the Udacity provided simulator and my drive_01.py file, the car can be driven autonomously around the track by executing 
+Using the Udacity provided simulator with my drive_01.py file and the model.h5 file, the car can be driven autonomously around the track by executing 
 ```
 python drive_01.py model.h5
 ```
+- It can drive laps of track 01 without going out of the road, video.mp4 shows a little more that one full lap with car staying on the road.
 
 #### 3. Submission code is usable and readable
 
-The model_v14.py and commonFunctions_v13.py files contain the code for training and saving the convolution neural network. More specifically, file model_v14.py shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
+The model_v14.py and commonFunctions_v13.py files contain the code for training and saving the convolution neural network. 
+
+More specifically, file model_v14.py shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
+
+Model_v14.py with help of commonFunctions_v13.py, use a python generator to generate data for training rather than storing the training data in memory.
+- Done in commonFunctions_V13.py, function generator() lines 147-174, called from model_v14.py lines 76-77 to define train and validation generators used in model.fit_generator() lines 136-140. 
+- I experimented first loading all images in one list, and then converting this list in an Numpy array. Taking Sample Data, it was about 8000 center images, mutiplied by 3 to include left and right images --> ~24000 images, multiply by 2 when adding flipping images --> 48000 images. And it was taking around 3 to 4 minutes to convert this list of ~48000 images to Numpy arrays for X_train and y_train. That's how I realized using a generator would either save this converstion time or spread it into the training process so that would would become transparent in term of processing time. Not yet even considering the benefit of using a generator to reduce memory size needed to held ~48000 images in memory.
+
 
 ### Model Architecture and Training Strategy
 
