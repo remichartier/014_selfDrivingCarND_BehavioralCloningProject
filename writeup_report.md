@@ -42,7 +42,7 @@ My project includes the following files:
 * video.mp4 to show model trained allows car to drive autonomously on 1st track of the simulator 
 
 #### 2. Submission includes functional code
-Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
+Using the Udacity provided simulator and my drive_01.py file, the car can be driven autonomously around the track by executing 
 ```
 python drive_01.py model.h5
 ```
