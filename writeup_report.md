@@ -84,18 +84,17 @@ In terms of pre-processing, I also followed recommendations both from the Projec
 
 The model contains several dropout layers in order to reduce overfitting (model_v14.py lines 102,106,109,112).
 
-The other method used to prevent overfitting is to run several epochs, save each epoch model, and select the model for the epoch in which the loss and validation loss are trending down and not up.
+The other method used to prevent overfitting is to run several epochs, save each epoch model, and select the model in which the epoch  loss and validation loss are trending down and not up.
 
 - Saving each model is done via using callback in the model.fit_generator(), cf model_v14.py lines 134 and 140.
-- One such exemple of training with many epochs is shown below. At the end, I selected model parameters built after epoch #09 to reduce overfitting.
+- One such exemple of training with many epochs is shown below. At the end, I selected model parameters built after epoch #09 as an additional way to reduce overfitting.
 
 ![alt text][image9]
 
-My current submission for this project only train and validate the model based on the sample data provided for this project and is only for a proof of concept.
+My current submission for this project only trains and validates the model based on the sample data provided for this project and is only for a proof of concept.
 
-However, in the course of testing the project, I developped also a system to train and validate on several other additional data inputs (images + steering values), cf model_v14.py lines 45-66.
-
-I used those thouroughfully to train and test different scenarios, however I was not seing improvements due to another issue I had not identified at that time. After finding this issue and fixing it, I just relied on the basic sample data provided with the project to validate the model and code to prove this concept is working, that is why the other data I collected is not used for this submission, but could be if I had more time to play with it. It could be used as well to prevent overfitting on the basic sample data.
+- However, in the course of testing the project, I developped also a system to train and validate on several other additional data inputs (images + steering values) as extra means to reduce overfitting, cf model_v14.py lines 45-66.
+- I used those additional data thouroughfully to train and test different scenarios, however I was not seing improvements due to another issue I had not identified at that time. After finding this issue and fixing it, I just relied on the basic sample data provided with the project to validate the model and code to prove this concept is working. That is why the additional data I collected is not used for this submission, but could be if I had more time to play with it. It could be used as well to prevent overfitting on the basic sample data.
 
 But even with sample data provided with the project, the model was trained and validated, and chosen to not overfit by selecting parameters trained on epoch #09. The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track (cf the provided video.mp4).
 
@@ -105,60 +104,23 @@ The model used an adam optimizer, so the learning rate was not tuned manually (m
 
 #### 4. Appropriate training data
 
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road ... 
+As mentioned above, I collected myself additional training data in an attempt to keep the vehicle driving on the road. 
 
-For details about how I created the training data, see the next section. 
+However, after fixing some pre-processing miss in drive_v01.py, I realized that just using the sample data provided with the project was enough for the model I implemented to allow the car to drive autonomously on the track without running out of the road.
 
-### Model Architecture and Training Strategy
+But if I had to train more in order to reduce overfitting, I could use this extra collected data. I used a combination of : 
+- Center lane driving both anti-clockwise and clockwise.
+- Collected data from recovering from the left and right sides of the road to the center. 
+- Collected data by running smoothly on turns/curves to improve car behavior whild driving toward curves. 
 
-#### 1. Solution Design Approach
+All this additional data to reduce overfitting was used at some points to train and validate the model while I was having issues to keep on the road.
+- code in model_v14.py lines 45-66.
+- However I commented it out after fixing pre-processing issues (conversions RGB to YUV and BGR to YUV) as just using the Sample Data was enough and I had struggled too much to find a good model keeping the car in the road that I stopped there and did not have time to take additional risks to test those overfitting solutions further before submitting the project and moving on to progress on the nanodegree.
 
-The overall strategy for deriving a model architecture was to ...
+I also used 2 strategies suggested in the project course to reduce overfitting by augmenting the data already at hand : 
 
-My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate because ...
-
-In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
-
-To combat the overfitting, I modified the model so that ...
-
-Then I ... 
-
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
-
-At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
-
-#### 2. Final Model Architecture
-
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
-
-Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
-
-![alt text][image1]
-
-#### 3. Creation of the Training Set & Training Process
-
-To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
-
-![alt text][image2]
-
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
-
-![alt text][image3]
-![alt text][image4]
-![alt text][image5]
-
-Then I repeated this process on track two in order to get more data points.
-
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
-
-![alt text][image6]
-![alt text][image7]
-
-Etc ....
-
-After the collection process, I had X number of data points. I then preprocessed this data by ...
+1. The driving Simulator provides center image, left and right image, and steering for the center image.
+  - I added both left and right image to the training, with a steering correction of +/- 0.2 vs center image steering value. (code in commonFunctions_v13.py lines 92-103, and 158).
+2 I flipped all images (center/left/right) and inversed corresponging steering values associate with each image, as a way to augment data to reduce overfitting. (code in commonFunctions_v13.py lines 110-115 and model_v14.py lines 160-162)
 
 
-I finally randomly shuffled the data set and put Y% of the data into a validation set. 
-
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
