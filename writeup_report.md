@@ -34,14 +34,16 @@ The goals / steps of this project are the following:
 #### 1. Submission includes all required files and can be used to run the simulator in autonomous mode
 
 My project includes the following files:
-* model_14.py containing the script to create and train the model
+* model_v14.py containing the script to create and train the model
 * drive_01.py for driving the car in autonomous mode
+* commonFunctions_v13.py for gathering all the functions needed by model_v14.py including generator function. 
 * model.h5 containing a trained convolution neural network 
 * writeup_report.md or writeup_report.pdf summarizing the results
+* video.mp4 to show model trained allows car to drive autonomously on 1st track of the simulator 
 
 #### 2. Submission includes functional code
 Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
-```sh
+```
 python drive_01.py model.h5
 ```
 
@@ -65,7 +67,12 @@ This model consists of a 5 successive convolution neural network layers, 3 first
 
 The CNN layers are followed by a flatten layer, and then 3 fully-connected layers reduce number of neurons from 100 to 50 to 10 and then to 1 neuron representing the steering control value of the car (model_v14.py lines 104-114). 
 
-The model includes several RELU layers to introduce nonlinearity (code lines 103,107,110,113) within the fully-connected layers, and the data is normalized in the model using a Keras lambda layer (code line 89). 
+The model includes several RELU layers to introduce nonlinearity (code lines 103,107,110,113) within the fully-connected layers, and the data is normalized in the model using a Keras lambda layer (code line 89).
+
+In terms of pre-processing, I also followed recommendations both from the Project course introduction as well as from the Nvidia model used, and those steps consist of : 
+
+- model_v14.py : 
+  - 
 
 #### 2. Attempts to reduce overfitting in the model
 
@@ -88,7 +95,7 @@ But even with sample data provided with the project, the model was trained and v
 
 #### 3. Model parameter tuning
 
-The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 25).
+The model used an adam optimizer, so the learning rate was not tuned manually (model_v14.py line 118).
 
 #### 4. Appropriate training data
 
