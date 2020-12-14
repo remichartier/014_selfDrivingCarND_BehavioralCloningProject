@@ -69,7 +69,9 @@ This model consists of a 5 successive convolution neural network layers, 3 first
 
 The CNN layers are followed by a flatten layer, and then 3 fully-connected layers reduce number of neurons from 100 to 50 to 10 and then to 1 neuron representing the steering control value of the car (model_v14.py lines 104-114). 
 
-The model includes several RELU layers to introduce nonlinearity (code lines 103,107,110,113) within the fully-connected layers, and the data is normalized in the model using a Keras lambda layer (code line 89).
+The model includes several RELU layers to introduce nonlinearity (code lines 103,107,110,113) within the fully-connected layers.
+
+The data is normalized in the model using a Keras lambda layer (code line 89), reducing values of pixels ranging [0;255] to range [-0.5;0.5] in order to have data mean zero centered which helps training converge faster to optimzed model and parameters.
 
 In terms of pre-processing, I also followed recommendations both from the Project course introduction as well as from the Nvidia model used, and those steps consist of : 
 
