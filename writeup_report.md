@@ -225,3 +225,14 @@ Exemple passing the curve
 - batch size.
 - Explain process : coded everything, tested, problems curve, added training in different phases, read articles, found clue, fix issue, train on sample data, submit project.
 - add training history image
+
+### Postmortem - Improvements to be done in the future
+
+Here is a list of things I found in my code while writing this report, and for which I think I should improve whenever I have time to come back to it : 
+
+| Topic   | Improvement opportunity |
+|---------|--------|
+| Cropping size | I kind of applied blindly the cropping parameters suggested in the project course. However while writing this report and extracting cropping images, I realize cropping size was a bit too extreme and it was cropping too much road space on the top side. This is something I could adjust better in the future.|
+| Angles for left and right images | I realized I made some mistakes in extrapolating left and right image angles based on center image steering data. I could improve this in future | 
+  
+
