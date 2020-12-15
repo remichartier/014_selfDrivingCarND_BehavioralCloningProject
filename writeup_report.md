@@ -150,9 +150,11 @@ Here is the full background about all the steps I took to find a good solution a
 
 Here I realized that final file name should be 'model.py', so instead of continuing with clone_v10.py name, I continued with model_v10.py :
 
-- model_v10 : choose better model for self driving cars and for this simulation. Trying https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars
-- model_v11 : test on GPU on all samples - fail on hard curve. best model after 5 epochs. 20201209_1247_Epoch05Modelv11ValidLoss0_013.h5
-- model_v12 : Try to avoid list to numpy conversion, taking few minutes, start with numpy image array straight from start. But loading images in numpy arrays was taking even longer, like forever.
+|file/version name|development progress|
+|------------|-------|
+| model_v10 | choose better model for self driving cars and for this simulation. Trying https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars |
+| model_v11 | test on GPU on all samples - fail on hard curve. best model after 5 epochs. 20201209_1247_Epoch05Modelv11ValidLoss0_013.h5 |
+| model_v12 | Try to avoid list to numpy conversion, taking few minutes, start with numpy image array straight from start. But loading images in numpy arrays was taking even longer, like forever.|
 
 I then realized that loading 48000 images in a single list was consuming too much time, and I really needed to find out a way to use a generator to work around this image loading time as well as the memory toll it would take without using a generator.
 
@@ -160,22 +162,26 @@ So I decided to start from scratch again and from the generator exemple used in 
 
 To mark this break, I started from a different file I named generator_v01.py.
 
-- generator_v01 : adaptation from the one given by Udacity to work
-- generator_v02 : adapt to commonFunctions_v10.py to use generator. Start adding again everything from model_v12.py (image augmentation)
-- generator_v03 : migrate model from model_v12.py to generator_v03.py, tested on GPU ok. Just need 6 or 7 epochs, not more.
-- generator_v04 : Add functionality to load different data collections + add data Last Hard Turn
-- generator_v05 : Load previous model, transfer learning from best previous model model.load_weights("20201209_1247_Epoch05Modelv11ValidLoss0_013.h5")
-- generator_v06 : reduce epochs to 4. : add 1 more lap I drive myself 003_OwnRecordingOneLapAntiClockwise
-- generator_v07 : increase epochs to 7 add 1 more lap I drive myself 004_ownRecordOneLapClockwise add 1 more lap I drive myself 005_ownRecordOneLapAntiClockwise
-- generator_v08 : back to Sample data without adding  recording. Add side corrections to center line.
-- generator_v09 : add clockwise Lap + anticlockwise Lap, use pre-trained weights. add problematic curve recording several times.
+|file/version name|development progress|
+|------------|-------|
+| generator_v01 | adaptation from the one given by Udacity to work |
+| generator_v02 | adapt to commonFunctions_v10.py to use generator. Start adding again everything from model_v12.py (image augmentation) |
+| generator_v03 | migrate model from model_v12.py to generator_v03.py, tested on GPU ok. Just need 6 or 7 epochs, not more. |
+| generator_v04 | Add functionality to load different data collections + add data Last Hard Turn |
+| generator_v05 | Load previous model, transfer learning from best previous model model.load_weights("20201209_1247_Epoch05Modelv11ValidLoss0_013.h5") |
+| generator_v06 | reduce epochs to 4. : add 1 more lap I drive myself 003_OwnRecordingOneLapAntiClockwise |
+| generator_v07 | increase epochs to 7 add 1 more lap I drive myself 004_ownRecordOneLapClockwise add 1 more lap I drive myself 005_ownRecordOneLapAntiClockwise |
+| generator_v08 | back to Sample data without adding  recording. Add side corrections to center line. |
+| generator_v09 | add clockwise Lap + anticlockwise Lap, use pre-trained weights. add problematic curve recording several times. |
 
 then I branched back to my model_vxx.py files as the final submission should be a "model.py" file name format.
 
 - Renamed model_v13.py
-- model_v13 : try to fix conversion issue BGR --> RGB --> YUV. Remove RGB which I think was not doing it anyway because lacked mode option in nd.image(). - Back to only the Sample data as first step after fixing Image Format conversion issues in commonFunctions and in drive.py 
-- model_v13 : passed with model.02 from 20201214_1400_modelsSampleData
-- model_v14 : try with dropout layers, build model, transfer learning from best model.h5 so far, 10 epochs
+
+|file/version name|development progress|
+| model_v13 : try to fix conversion issue BGR --> RGB --> YUV. Remove RGB which I think was not doing it anyway because lacked mode option in nd.image(). - Back to only the Sample data as first step after fixing Image Format conversion issues in commonFunctions and in drive.py |
+| model_v13 : passed with model.02 from 20201214_1400_modelsSampleData |
+| model_v14 : try with dropout layers, build model, transfer learning from best model.h5 so far, 10 epochs|
 
 
 
