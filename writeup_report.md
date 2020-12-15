@@ -142,9 +142,9 @@ Here is the full background about all the steps I took to find a good solution a
 | clone_v04 | data augmentation flip horizontally image + inverse measurements |
 | clone_v05 | use left/right images + measurements with Steering error correction |
 | clone_v06 | cropping images |
-| clone_v07 | add a generator to load data and preprocess it on the fly, in batchsize portions to feed into your Behavioral Cloning model .
-  - Here I tried to integrate the generator presented in the project courses to the implementation I had already reached until clone_v06.py. 
-  - However, I was getting warnings that due to Keras models and versions loaded, the fit_generator() function / API parameters had changed, and the fit_generator was not working as expected when I tried to use fit_generator() with the latest parameters from the latest API.|
+| clone_v07 | add a generator to load data and preprocess it on the fly, in batchsize portions to feed into your Behavioral Cloning model .|
+|     _     | Here I tried to integrate the generator presented in the project courses to the implementation I had already reached until clone_v06.py. |
+|     _     | However, I was getting warnings that due to Keras models and versions loaded, the fit_generator() function / API parameters had changed, and the fit_generator was not working as expected when I tried to use fit_generator() with the latest parameters from the latest API.|
 | clone_v08 | Adding loss viusalization tool |
 | clone_v09 | As this fit_generator was not working, I reverted back to clone_v06.py version. Re-start from v06 as fit_generator and need to add generator obsolete. Latest Keras.Model.fit integrates a generator in itself. Visualize loss history. |
 
