@@ -132,20 +132,21 @@ I also used 2 strategies suggested in the project course to reduce overfitting b
 #### 5. Creation of training dataset and training process documented 
 How the model was trained, what the characteristics of the dataset are. Info how the dataset was generated , exemples of images from the dataset must be included.
 
-Here is a little background about all the steps I took to find a good solution allowing the car to drive autonomously for at least one whole track #01, and this is reflected by the successive version history of model_vxx.py and commonFunctions_vxx.py files, as well as files found in my archiveOldVersions folder, like clone_vxx.py and generator_vxx.py which are branches and predecessors of model_vxx.py file :  
+Here is the full background about all the steps I took to find a good solution allowing the car to drive autonomously for at least one whole track #01, and this is reflected by the successive version history of model_vxx.py and commonFunctions_vxx.py files, as well as files found in my archiveOldVersions folder, like clone_vxx.py and generator_vxx.py which are branches and predecessors of model_vxx.py file :  
 
-
-- clone_v01 : Start
-- clone_v02 : add nb_images to read parameter to be able to only read and process a minimum number of images rather than the full set, to validate first on a subset of images.
-- clone_v03 : add normalization + mean centering data to 0
-- clone_v04 : data augmentation flip horizontally image + inverse measurements
-- clone_v05 : use left/right images + measurements with Steering error correction
-- clone_v06 : cropping images
-- clone_v07 : add a generator to load data and preprocess it on the fly, in batchsize portions to feed into your Behavioral Cloning model .
+|file/version name|development progress|
+|------------|-------|
+| clone_v01 | Start |
+| clone_v02 | add nb_images to read parameter to be able to only read and process a minimum number of images rather than the full set, to validate first on a subset of images |
+| clone_v03 | add normalization + mean centering data to 0 |
+| clone_v04 | data augmentation flip horizontally image + inverse measurements |
+| clone_v05 | use left/right images + measurements with Steering error correction |
+| clone_v06 | cropping images |
+| clone_v07 | add a generator to load data and preprocess it on the fly, in batchsize portions to feed into your Behavioral Cloning model .
   - Here I tried to integrate the generator presented in the project courses to the implementation I had already reached until clone_v06.py. 
-  - However, I was getting warnings that due to Keras models and versions loaded, the fit_generator() function / API parameters had changed, and the fit_generator was not working as expected when I tried to use fit_generator() with the latest parameters from the latest API.
-- clone_v08 : Adding loss viusalization tool
-- clone_v09 : As this fit_generator was not working, I reverted back to clone_v06.py version. Re-start from v06 as fit_generator and need to add generator obsolete. Latest Keras.Model.fit integrates a generator in itself. Visualize loss history.
+  - However, I was getting warnings that due to Keras models and versions loaded, the fit_generator() function / API parameters had changed, and the fit_generator was not working as expected when I tried to use fit_generator() with the latest parameters from the latest API.|
+| clone_v08 | Adding loss viusalization tool |
+| clone_v09 | As this fit_generator was not working, I reverted back to clone_v06.py version. Re-start from v06 as fit_generator and need to add generator obsolete. Latest Keras.Model.fit integrates a generator in itself. Visualize loss history. |
 
 Here I realized that final file name should be 'model.py', so instead of continuing with clone_v10.py name, I continued with model_v10.py :
 
