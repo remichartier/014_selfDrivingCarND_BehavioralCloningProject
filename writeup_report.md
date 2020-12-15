@@ -179,9 +179,10 @@ then I branched back to my model_vxx.py files as the final submission should be 
 - Renamed model_v13.py
 
 |file/version name|development progress|
-| model_v13 : try to fix conversion issue BGR --> RGB --> YUV. Remove RGB which I think was not doing it anyway because lacked mode option in nd.image(). - Back to only the Sample data as first step after fixing Image Format conversion issues in commonFunctions and in drive.py |
-| model_v13 : passed with model.02 from 20201214_1400_modelsSampleData |
-| model_v14 : try with dropout layers, build model, transfer learning from best model.h5 so far, 10 epochs|
+|------------|-------|
+| model_v13 | try to fix conversion issue BGR --> RGB --> YUV. Remove RGB which I think was not doing it anyway because lacked mode option in nd.image(). - Back to only the Sample data as first step after fixing Image Format conversion issues in commonFunctions and in drive.py |
+| model_v13 | passed with model.02 from 20201214_1400_modelsSampleData |
+| model_v14 | try with dropout layers, build model, transfer learning from best model.h5 so far, 10 epochs|
 
 
 
