@@ -17,7 +17,9 @@ The goals / steps of this project are the following:
 
 [image8]: ./writeupReportMaterials/Nvidia_cnn-architecture-624x890.png "NVidia Model Visualization"
 [image9]: ./writeupReportMaterials/epochsTrainingExemple.png "Epochs Training"
-
+[image10]: ./writeupReportMaterials/randomImageCenterLeftright.png "Images"
+[image11]: ./writeupReportMaterials/randomImageCenterLeftrightFLIPPED.png "Flipped images"
+[image12]: ./writeupReportMaterials/randomImageCenterLeftrightCROPPED.png "Cropped images"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
@@ -140,20 +142,23 @@ Here is the full background about all the steps I took to find a good solution a
 | clone_v02 | add nb_images to read parameter to be able to only read and process a minimum number of images rather than the full set, to validate first on a subset of images |
 | clone_v03 | add normalization + mean centering data to 0 |
 | clone_v04 | data augmentation flip horizontally image + inverse measurements |
-
-Exemple of flipped image and measurements : 
-
-|file/version|development progress|
-|------------|-------|
 | clone_v05 | use left/right images + measurements with Steering error correction |
 
 Exemple of using center, left, right images + steering measurements : 
+![alt text][image10]
+Angles Center, Left, Right images : [-0.0787459, 0.12125410000000002, -0.2787459]
+
+
+Exemple of flipped image and measurements : 
+![alt text][image11]
+flipped Angles Center, Left, Right images : [0.0787459, -0.12125410000000002, 0.2787459]
 
 |file/version|development progress|
 |------------|-------|
 | clone_v06 | cropping images |
 
 Exemple of image cropping : 
+![alt text][image12]
 
 |file/version|development progress|
 |------------|-------|
