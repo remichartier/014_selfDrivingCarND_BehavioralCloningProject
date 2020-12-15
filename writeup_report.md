@@ -1,8 +1,5 @@
-# **Behavioral Cloning** 
-
-## Writeup
+# ** Writeup Report for Behavioral Cloning Project ** 
 ---
-
 **Behavioral Cloning Project**
 
 The goals / steps of this project are the following:
@@ -21,6 +18,8 @@ The goals / steps of this project are the following:
 [image11]: ./writeupReportMaterials/randomImageCenterLeftrightFLIPPED.png "Flipped images"
 [image12]: ./writeupReportMaterials/randomImageCenterLeftrightCROPPED.png "Cropped images"
 [image13]: ./writeupReportMaterials/lossHistory_submittedModel.png "History Object Visualization"
+[image14]: ./writeupReportMaterials/curveDriveStraight.png "Issue at Curve"
+[image15]: ./writeupReportMaterials/curvePassingOK.png "Curve Issue Fixed"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
@@ -145,20 +144,24 @@ Here is the full background about all the steps I took to find a good solution a
 | clone_v04 | data augmentation flip horizontally image + inverse measurements |
 | clone_v05 | use left/right images + measurements with Steering error correction |
 
-Exemple of using center, left, right images + steering measurements : 
+**Exemple of using center, left, right images + steering measurements :** 
+
 ![alt text][image10]
-Angles Center, Left, Right images : [-0.0787459, 0.12125410000000002, -0.2787459]
 
+**Angles Center, Left, Right images : [-0.0787459, 0.12125410000000002, -0.2787459]**
 
-Exemple of flipped image and measurements : 
+**Exemple of flipped images and measurements** : 
+
 ![alt text][image11]
-flipped Angles Center, Left, Right images : [0.0787459, -0.12125410000000002, 0.2787459]
+
+**Flipped Angles Center, Left, Right images : [0.0787459, -0.12125410000000002, 0.2787459]**
 
 |file/version|development progress|
 |------------|-------|
 | clone_v06 | cropping images |
 
-Exemple of image cropping : 
+**Exemple of image cropping :**
+
 ![alt text][image12]
 
 |file/version|development progress|
@@ -168,7 +171,8 @@ Exemple of image cropping :
 |     _     | However, I was getting warnings that due to Keras models and versions loaded, the fit_generator() function / API parameters had changed, and the fit_generator was not working as expected when I tried to use fit_generator() with the latest parameters from the latest API.|
 | clone_v08 | Adding loss visualization tool |
 
-Exemple visualiztion fit_generator() history object : 
+**Exemple visualiztion fit_generator() history object : **
+
 ![alt text][image13]
 
 |file/version|development progress|
@@ -182,7 +186,9 @@ Here I realized that final file name should be 'model.py', so instead of continu
 | model_v10 | choose better model for self driving cars and for this simulation. Trying https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars |
 | model_v11 | test on GPU on all samples - fail on hard curve. best model after 5 epochs. 20201209_1247_Epoch05Modelv11ValidLoss0_013.h5 |
 
-Location where Car would drive straight and miss the curve : 
+**Location where Car would drive straight and miss the curve :**
+
+![alt text][image14]
 
 |file/version|development progress|
 |------------|-------|
@@ -216,9 +222,9 @@ then I branched back to my model_vxx.py files as the final submission should be 
 | model_v13 | passed with model.02 from 20201214_1400_modelsSampleData |
 | model_v14 | try with dropout layers, build model, transfer learning from best model.h5 so far, 10 epochs|
 
-Exemple passing the curve
+**Exemple passing the curve :**
 
-
+![alt text][image15]
 
 
 
