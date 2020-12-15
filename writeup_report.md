@@ -20,6 +20,7 @@ The goals / steps of this project are the following:
 [image10]: ./writeupReportMaterials/randomImageCenterLeftright.png "Images"
 [image11]: ./writeupReportMaterials/randomImageCenterLeftrightFLIPPED.png "Flipped images"
 [image12]: ./writeupReportMaterials/randomImageCenterLeftrightCROPPED.png "Cropped images"
+[image13]: ./writeupReportMaterials/lossHistory_submittedModel.png "History Object Visualization"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
@@ -168,7 +169,7 @@ Exemple of image cropping :
 | clone_v08 | Adding loss visualization tool |
 
 Exemple visualiztion fit_generator() history object : 
-
+![alt text][image13]
 
 |file/version|development progress|
 |------------|-------|
