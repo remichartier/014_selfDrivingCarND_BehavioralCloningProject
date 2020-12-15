@@ -132,6 +132,30 @@ I also used 2 strategies suggested in the project course to reduce overfitting b
 #### 5. Creation of training dataset and training process documented 
 How the model was trained, what the characteristics of the dataset are. Info how the dataset was generated , exemples of images from the dataset must be included.
 
+Here is a little background about all the steps I took to find a good solution allowing the car to drive autonomously for at least one whole track #01, and this is reflected by the successive version history of model_vxx.py and commonFunctions_vxx.py files, as well as files found in my archiveOldVersions folder, like clone_vxx.py and generator_vxx.py which are branches and predecessors of model_vxx.py file :  
+
+- I started by following suggestions and recommendations from the project videos, loading the csv file, extracting list of images
+# History
+# v01 : Start
+# v02 : add nb_images to read parameter
+# v03 : add normalization + mean centering data to 0
+# v04 : data augmentation flip horizontally image + inverse measurements
+# v05 : use left/right images + measurements with Steering error correction
+# v06 : cropping images
+# v07 : add a generator to load data and preprocess it on the fly, in batchsize portions 
+#        to feed into your Behavioral Cloning model .
+# v08 : Adding loss viusalization tool
+# v09 : Re-start from v06 as fit_generator and need to add generator obsolete.
+#       Latest Keras.Model.fit integrates a generator in itself.
+#       ie v09 : Visualize loss history
+
+
+
+
+
+
+
+
 - saving model.
 - learning transfer model_V14.py line 129.
 - mistakes done.
