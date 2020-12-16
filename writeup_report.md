@@ -167,9 +167,9 @@ Here is the full background about all the steps I took to find a good solution a
 
 |file/version|development progress|
 |------------|-------|
-| clone_v07 | add a generator to load data and preprocess it on the fly, in batchsize portions to feed into your Behavioral Cloning model .|
+| clone_v07 | add a generator to load data and preprocess it on the fly, in batchsize portions to feed into the Behavioral Cloning model .|
 |     _     | Here I tried to integrate the generator presented in the project courses to the implementation I had already reached until clone_v06.py. |
-|     _     | However, I was getting warnings that due to Keras models and versions loaded, the fit_generator() function / API parameters had changed, and the fit_generator was not working as expected when I tried to use fit_generator() with the latest parameters from the latest API.|
+|     _     | However, I was getting warnings that due to Keras models and versions loaded, the fit_generator() function / API parameters had changed and obsolete, and the fit_generator was not working as expected when I tried to use fit_generator() with the latest parameters from the latest API.|
 | clone_v08 | Adding loss visualization tool |
 
 **Exemple visualiztion fit_generator() history object : **
@@ -178,14 +178,14 @@ Here is the full background about all the steps I took to find a good solution a
 
 |file/version|development progress|
 |------------|-------|
-| clone_v09 | As this fit_generator was not working, I reverted back to clone_v06.py version. Re-start from v06 as fit_generator and need to add generator obsolete. Latest Keras.Model.fit integrates a generator in itself. Visualize loss history. |
+| clone_v09 | As this fit_generator was not working, I reverted back to clone_v06.py version. Re-start from v06 as fit_generator was said obsolete by Keras documentation. Latest Keras.Model.fit integrates a generator in itself. Visualize loss history. |
 
 Here I realized that final file name should be 'model.py', so instead of continuing with clone_v10.py name, I continued with model_v10.py :
 
 |file/version|development progress|
 |------------|-------|
-| model_v10 | choose better model for self driving cars and for this simulation. Trying https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars |
-| model_v11 | test on GPU on all samples - fail on hard curve. best model after 5 epochs. 20201209_1247_Epoch05Modelv11ValidLoss0_013.h5 |
+| model_v10 | choose better model for self driving cars and for this simulation. Trying Nvidia model mentioned in https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars |
+| model_v11 | test on GPU on all samples - fail on hard curve. Best model after 5 epochs. 20201209_1247_Epoch05Modelv11ValidLoss0_013.h5 |
 
 **Location where Car would drive straight and miss the curve :**
 
@@ -199,7 +199,7 @@ Here I realized that final file name should be 'model.py', so instead of continu
 
 I then realized that loading 48000 images in a single list was consuming too much time, and I really needed to find out a way to use a generator to work around this image loading time as well as the memory toll it would take without using a generator.
 
-So I decided to start from scratch again and from the generator exemple used in the previous project chapters. Start from this version and re-using the functions previously developped in commonFunctions_vxx.py files.
+So I decided to start from scratch again and redesign the main model from the generator exemple used in the previous project chapters. Start from this version and re-using the functions previously developped in commonFunctions_vxx.py files.
 
 To mark this break, I started from a different file I named generator_v01.py.
 
@@ -209,10 +209,49 @@ To mark this break, I started from a different file I named generator_v01.py.
 | generator_v02 | adapt to commonFunctions_v10.py to use generator. Start adding again everything from model_v12.py (image augmentation) |
 | generator_v03 | migrate model from model_v12.py to generator_v03.py, tested on GPU ok. Just need 6 or 7 epochs, not more. |
 | generator_v04 | Add functionality to load different data collections + add data Last Hard Turn |
+
+So here at that point, I was using a generator, with sample data provided by Udacity. But I was always failing on the curve shown earlier, it was always driving straight instead of following the curve.
+
+So at that point, I decided to collect more driving data from the Simulator, in the hope to help the model pass that curve.
+
+- I started to collect images while driving specifically through that curve.
+- It did not help, car was still not following the curve, still driving straight on the curve.
+
+Below I started to use transfer learning, ie re-use previous trained model to speed up parameters training of future epochs. Loading previous weights before fitting the model again through following code line : 
+```
+model.load_weights("20201213_1400_modelsSampleData/model.02-Loss0.0081-valLoss0.0093.h5") 
+```
+
+|file/version|development progress|
+|------------|-------|
 | generator_v05 | Load previous model, transfer learning from best previous model model.load_weights("20201209_1247_Epoch05Modelv11ValidLoss0_013.h5") |
+
+However, reaching better training and lesser loss did not fix this curve driving issue.
+
+I then decided to add more data by driving full laps, collect data, and use it to train the model.
+
+First by collecting a 2nd AntiClockwise driving lap, and adding it to the sample data provided by Udacity, training again the model.
+
+|file/version|development progress|
+|------------|-------|
 | generator_v06 | reduce epochs to 4. : add 1 more lap I drive myself 003_OwnRecordingOneLapAntiClockwise |
+
+Still, not fixing the curve issue --> added more data by driving Clockwise (004) (inversed from normal sample lap and data 003) and training the model with this additional data, even adding 1 more lap antiClockwise (005) : 
+
+|file/version|development progress|
+|------------|-------|
 | generator_v07 | increase epochs to 7 add 1 more lap I drive myself 004_ownRecordOneLapClockwise add 1 more lap I drive myself 005_ownRecordOneLapAntiClockwise |
+
+Still, not fixing the curve issue --> I then followed recommendation to collect data about having the car on the sides and correcting the position to place it in the center of the road--> collected 1 lap correcting from the right, and 1 lap connecting from the left.
+
+|file/version|development progress|
+|------------|-------|
 | generator_v08 | back to Sample data without adding  recording. Add side corrections to center line. |
+
+Still, it could not help fixing the curve issue.
+
+|file/version|development progress|
+|------------|-------|
 | generator_v09 | add clockwise Lap + anticlockwise Lap, use pre-trained weights. add problematic curve recording several times. |
 
 then I branched back to my model_vxx.py files as the final submission should be a "model.py" file name format.
