@@ -19,7 +19,7 @@ The goals / steps of this project are the following:
 [image12]: ./writeupReportMaterials/randomImageCenterLeftrightCROPPED.png "Cropped images"
 [image13]: ./writeupReportMaterials/lossHistory_submittedModel.png "History Object Visualization"
 [image14]: ./writeupReportMaterials/Screenshot_from_2020-12-15_17-48-12.png "Issue at Curve"
-[image15]: ./writeupReportMaterials/Screenshot_from_2020-12-15_17-48-52.png.png "Issue at Curve"
+[image15]: ./writeupReportMaterials/Screenshot_from_2020-12-15_17-48-52.png "Issue at Curve closer"
 [image16]: ./writeupReportMaterials/Screenshot_from_2020-12-15_17-52-40.png "Curve Issue Fixed"
 
 ## Rubric Points
