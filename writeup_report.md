@@ -1,4 +1,4 @@
-# ** Writeup Report for Behavioral Cloning Project ** 
+# Writeup Report for Behavioral Cloning Project  
 ---
 **Behavioral Cloning Project**
 
