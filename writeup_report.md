@@ -1,4 +1,4 @@
-# Writeup Report for Behavioral Cloning Project  
+# Write-up Report for Behavioral Cloning Project  
 ---
 **Behavioral Cloning Project**
 
@@ -53,7 +53,7 @@ More specifically, file model_v14.py shows the pipeline I used for training and 
 
 Model_v14.py with help of commonFunctions_v13.py, use a python generator to generate data for training rather than storing the training data in memory.
 - Done in commonFunctions_V13.py, function generator() lines 147-174, called from model_v14.py lines 76-77 to define train and validation generators used in model.fit_generator() lines 136-140. 
-- I experimented first loading all images in one list, and then converting this list in an Numpy array. Taking Sample Data, it was about 8000 center images, mutiplied by 3 to include left and right images --> ~24000 images, multiply by 2 when adding flipping images --> 48000 images. And it was taking around 3 to 4 minutes to convert this list of ~48000 images to Numpy arrays for X_train and y_train. That's how I realized using a generator would either save this converstion time or spread it into the training process so that would would become transparent in term of processing time. Not yet even considering the benefit of using a generator to reduce memory size needed to held ~48000 images in memory.
+- I experimented first loading all images in one list, and then converting this list in an Numpy array. Taking Sample Data, it was about 8000 center images, multiplied by 3 to include left and right images --> ~24000 images, multiply by 2 when adding flipping images --> 48000 images. And it was taking around 3 to 4 minutes to convert this list of ~48000 images to Numpy arrays for X_train and y_train. That's how I realized using a generator would either save this conversion time or spread it into the training process so that would would become transparent in term of processing time. Not yet even considering the benefit of using a generator to reduce memory size needed to held ~48000 images in memory.
 
 
 ### Model Architecture and Training Strategy
@@ -64,7 +64,7 @@ I followed the Nvidia model as mentioned in the project courses, as it was said 
 
 The model is implemented in model_v14.py lines 88 to 114.
 
-I took the general architecture of the model and adapted to our purpose here. Following this achitecture : 
+I took the general architecture of the model and adapted to our purpose here. Following this architecture : 
 
 ![alt text][image8]
 
@@ -72,9 +72,9 @@ This model consists of a 5 successive convolution neural network layers, 3 first
 
 The CNN layers are followed by a flatten layer, and then 3 fully-connected layers reduce number of neurons from 100 to 50 to 10 and then to 1 neuron representing the steering control value of the car (model_v14.py lines 104-114). 
 
-The model includes several RELU layers to introduce nonlinearity (code lines 103,107,110,113) within the fully-connected layers.
+The model includes several RELU layers to introduce non-linearity (code lines 103,107,110,113) within the fully-connected layers.
 
-The data is normalized in the model using a Keras lambda layer (code line 89), reducing values of pixels ranging [0;255] to range [-0.5;0.5] in order to have data mean zero centered which helps training converge faster to optimzed model and parameters.
+The data is normalized in the model using a Keras lambda layer (code line 89), reducing values of pixels ranging [0;255] to range [-0.5;0.5] in order to have data mean zero centered which helps training converge faster to optimized model and parameters.
 
 In terms of pre-processing, I also followed recommendations both from the Project course introduction as well as from the Nvidia model used, and those steps consist of : 
 
@@ -91,19 +91,19 @@ In terms of pre-processing, I also followed recommendations both from the Projec
 
 The model contains several dropout layers in order to reduce overfitting (model_v14.py lines 102,106,109,112).
 
-I am spliting data after shuffling all data input, between training data and validation data (train/validation split of 0.2, model_v14.py line 69) in order to measure over/under fitting of the data via model.fit_generator() line 136.
+I am splitting data after shuffling all data input, between training data and validation data (train/validation split of 0.2, model_v14.py line 69) in order to measure over/under fitting of the data via model.fit_generator() line 136.
 
 The other method used to prevent overfitting is to run several epochs, save each epoch model, and select the model in which the epoch  loss and validation loss are trending down and not up.
 
 - Saving each model is done via using callback in the model.fit_generator(), cf model_v14.py lines 134 and 140.
-- One such exemple of training with many epochs is shown below. At the end, I selected model parameters built after epoch #09 as an additional way to reduce overfitting.
+- One such example of training with many epochs is shown below. At the end, I selected model parameters built after epoch #09 as an additional way to reduce overfitting.
 
 ![alt text][image9]
 
 My current submission for this project only trains and validates the model based on the sample data provided for this project and is only for a proof of concept.
 
-- However, in the course of testing the project, I developped also a system to train and validate on several other additional data inputs (images + steering values) as extra means to reduce overfitting, cf model_v14.py lines 45-66.
-- I used those additional data thoroughfully to train and test different scenarios, however I was not seing improvements due to another issue I had not identified at that time. After finding this issue and fixing it, I just relied on the basic sample data provided with the project to validate the model and code to prove this concept is working. That is why the additional data I collected is not used for this submission, but could be if I had more time to play with it. It could be used as well to prevent overfitting on the basic sample data.
+- However, in the course of testing the project, I developed also a system to train and validate on several other additional data inputs (images + steering values) as extra means to reduce overfitting, cf model_v14.py lines 45-66.
+- I used those additional data thoroughfully to train and test different scenarios, however I was not seeing improvements due to another issue I had not identified at that time. After finding this issue and fixing it, I just relied on the basic sample data provided with the project to validate the model and code to prove this concept is working. That is why the additional data I collected is not used for this submission, but could be if I had more time to play with it. It could be used as well to prevent overfitting on the basic sample data.
 
 But even with sample data provided with this project, the model was trained and validated, and chosen to not overfit by selecting parameters trained on epoch #09. The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track (cf the provided video.mp4).
 
@@ -120,7 +120,7 @@ However, after fixing some pre-processing miss in drive_v01.py, I realized that 
 But if I had to train more in order to reduce overfitting, I could use this extra collected data. I used a combination of : 
 - Center lane driving both anti-clockwise and clockwise.
 - Collected data from recovering from the left and right sides of the road to the center. 
-- Collected data by running smoothly on turns/curves to improve car behavior whild driving toward curves. 
+- Collected data by running smoothly on turns/curves to improve car behavior while driving toward curves. 
 
 All this additional data to reduce overfitting was used at some points to train and validate the model while I was having issues to keep on the road.
 - code in model_v14.py lines 45-66.
@@ -130,10 +130,10 @@ I also used 2 strategies suggested in the project course to reduce overfitting b
 
 1. The driving Simulator provides center image, left and right image, and steering for the center image.
   - I added both left and right image to the training, with a steering correction of +/- 0.2 vs center image steering value. (code in commonFunctions_v13.py lines 92-103, and 158).
-2 I flipped all images (center/left/right) and inversed corresponging steering values associate with each image, as a way to augment data to reduce overfitting. (code in commonFunctions_v13.py lines 110-115 and model_v14.py lines 160-162)
+2 I flipped all images (center/left/right) and inversed corresponding steering values associate with each image, as a way to augment data to reduce overfitting. (code in commonFunctions_v13.py lines 110-115 and model_v14.py lines 160-162)
 
 #### 5. Creation of training dataset and training process documented 
-How the model was trained, what the characteristics of the dataset are. Info how the dataset was generated , exemples of images from the dataset must be included.
+How the model was trained, what the characteristics of the dataset are. Info how the dataset was generated , examples of images from the dataset must be included.
 
 Here is the full background about all the steps I took to find a good solution allowing the car to drive autonomously for at least one whole track #01, and this is reflected by the successive version history of model_vxx.py and commonFunctions_vxx.py files, as well as files found in my archiveOldVersions folder, like clone_vxx.py and generator_vxx.py which are branches and predecessors of model_vxx.py file :  
 
@@ -145,13 +145,13 @@ Here is the full background about all the steps I took to find a good solution a
 | clone_v04 | data augmentation flip horizontally image + inverse measurements |
 | clone_v05 | use left/right images + measurements with Steering error correction |
 
-**Exemple of using center, left, right images + steering measurements :** 
+**Example of using center, left, right images + steering measurements :** 
 
 ![alt text][image10]
 
 **Angles Center, Left, Right images : [-0.0787459, 0.12125410000000002, -0.2787459]**
 
-**Exemple of flipped images and measurements** : 
+**Example of flipped images and measurements** : 
 
 ![alt text][image11]
 
@@ -161,7 +161,7 @@ Here is the full background about all the steps I took to find a good solution a
 |------------|-------|
 | clone_v06 | cropping images |
 
-**Exemple of image cropping :**
+**Example of image cropping :**
 
 ![alt text][image12]
 
@@ -172,7 +172,7 @@ Here is the full background about all the steps I took to find a good solution a
 |     _     | However, I was getting warnings that due to Keras models and versions loaded, the fit_generator() function / API parameters had changed and obsolete, and the fit_generator was not working as expected when I tried to use fit_generator() with the latest parameters from the latest API.|
 | clone_v08 | Adding loss visualization tool |
 
-**Exemple visualiztion fit_generator() history object :**
+**Example visualization fit_generator() history object :**
 
 ![alt text][image13]
 
@@ -195,11 +195,11 @@ Here I realized that final file name should be 'model.py', so instead of continu
 
 |file/version|development progress|
 |------------|-------|
-| model_v12 | Try to avoid list to numpy conversion, taking few minutes, start with numpy image array straight from start. But loading images in numpy arrays was taking even longer, like forever.|
+| model_v12 | Try to avoid list to Numpy conversion, taking few minutes, start with Numpy image array straight from start. But loading images in Numpy arrays was taking even longer, like forever.|
 
 I then realized that loading 48000 images in a single list was consuming too much time, and I really needed to find out a way to use a generator to work around this image loading time as well as the memory toll it would take without using a generator.
 
-So I decided to start from scratch again and redesign the main model from the generator exemple used in the previous project chapters. Start from this version and re-using the functions previously developped in commonFunctions_vxx.py files.
+So I decided to start from scratch again and redesign the main model from the generator example used in the previous project chapters. Start from this version and re-using the functions previously developed in commonFunctions_vxx.py files.
 
 To mark this break, I started from a different file I named generator_v01.py.
 
@@ -258,7 +258,7 @@ Still, it could not help fixing the curve issue keeping car inside the track.
 |------------|-------|
 | generator_v09 | add clockwise Lap + anticlockwise Lap, use pre-trained weights. add problematic curve recording several times. |
 
-Here adding more data or adding more data focussing on the problematic road would not fix issues neither.
+Here adding more data or adding more data focusing on the problematic road would not fix issues neither.
 
 Then I branched back to my model_vxx.py files as the final submission should be a "model.py" file name format.
 
@@ -270,7 +270,7 @@ Then I branched back to my model_vxx.py files as the final submission should be 
 
 From there, I realized by reading Mentor Helps questions and answers, that possibly the fact that the car was missing the curve could be due to image format conversions issues.
 - I looked again at my implementation, and found that : 
-  - I had not properly converted images after loading them. I was loading them in BGR, converted them to RGB because instructions were alerting that Simulator was only acceptiong RGB format. But then I converted RGB into YUV. But the way I converted BGR to RGB was not correct, and therefore the whole conversion chain was wrong. --> I fixed it.
+  - I had not properly converted images after loading them. I was loading them in BGR, converted them to RGB because instructions were alerting that Simulator was only accepting RGB format. But then I converted RGB into YUV. But the way I converted BGR to RGB was not correct, and therefore the whole conversion chain was wrong. --> I fixed it.
   - At the same time, I realized I completely neglected what the drive.py file was doing, and therefore ignored the fact that drive.py should have loaded images and convert them to YUV in order to feed them to the model to output steering angle.
   
 Once I correctly fixed those 2 issues, I started to have a model which allowed to drive the car inside the track for more than one lap, and pass the problematic curve successfully.
@@ -280,7 +280,7 @@ Once I correctly fixed those 2 issues, I started to have a model which allowed t
 | model_v13 | passed with model.02 from 20201214_1400_modelsSampleData |
 | model_v14 | try with dropout layers, build model, transfer learning from best model.h5 so far, 10 epochs|
 
-**Exemple passing the curve :**
+**Example passing the curve :**
 
 ![alt text][image16]
 
