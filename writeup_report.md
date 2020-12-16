@@ -18,8 +18,9 @@ The goals / steps of this project are the following:
 [image11]: ./writeupReportMaterials/randomImageCenterLeftrightFLIPPED.png "Flipped images"
 [image12]: ./writeupReportMaterials/randomImageCenterLeftrightCROPPED.png "Cropped images"
 [image13]: ./writeupReportMaterials/lossHistory_submittedModel.png "History Object Visualization"
-[image14]: ./writeupReportMaterials/curveDriveStraight.png "Issue at Curve"
-[image15]: ./writeupReportMaterials/curvePassingOK.png "Curve Issue Fixed"
+[image14]: ./writeupReportMaterials/Screenshot_from_2020-12-15_17-48-12.png "Issue at Curve"
+[image15]: ./writeupReportMaterials/Screenshot_from_2020-12-15_17-48-52.png.png "Issue at Curve"
+[image15]: ./writeupReportMaterials/Screenshot_from_2020-12-15_17-52-40.png "Curve Issue Fixed"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
