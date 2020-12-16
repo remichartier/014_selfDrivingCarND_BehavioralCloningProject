@@ -172,7 +172,7 @@ Here is the full background about all the steps I took to find a good solution a
 |     _     | However, I was getting warnings that due to Keras models and versions loaded, the fit_generator() function / API parameters had changed and obsolete, and the fit_generator was not working as expected when I tried to use fit_generator() with the latest parameters from the latest API.|
 | clone_v08 | Adding loss visualization tool |
 
-**Exemple visualiztion fit_generator() history object : **
+**Exemple visualiztion fit_generator() history object :**
 
 ![alt text][image13]
 
@@ -210,12 +210,14 @@ To mark this break, I started from a different file I named generator_v01.py.
 | generator_v03 | migrate model from model_v12.py to generator_v03.py, tested on GPU ok. Just need 6 or 7 epochs, not more. |
 | generator_v04 | Add functionality to load different data collections + add data Last Hard Turn |
 
-So here at that point, I was using a generator, with sample data provided by Udacity. But I was always failing on the curve shown earlier, it was always driving straight instead of following the curve.
+So here at that point, I was using a generator, with sample data provided by Udacity. But I was always failing on the curve shown earlier, it was always driving straight instead of following the curve or the car would drive out of the road before reaching the problematic curve.
+
+I tried changing the steering corrections for the left and right images, made several tests with different values. The car would drive out of the road even before reaching the problematic curve.
 
 So at that point, I decided to collect more driving data from the Simulator, in the hope to help the model pass that curve.
 
 - I started to collect images while driving specifically through that curve.
-- It did not help, car was still not following the curve, still driving straight on the curve.
+- It did not help, car was still either driving out of the road before reaching problematic curve, or not following the curve, still driving straight on the curve.
 
 Below I started to use transfer learning, ie re-use previous trained model to speed up parameters training of future epochs. Loading previous weights before fitting the model again through following code line : 
 ```
@@ -226,7 +228,7 @@ model.load_weights("20201213_1400_modelsSampleData/model.02-Loss0.0081-valLoss0.
 |------------|-------|
 | generator_v05 | Load previous model, transfer learning from best previous model model.load_weights("20201209_1247_Epoch05Modelv11ValidLoss0_013.h5") |
 
-However, reaching better training and lesser loss did not fix this curve driving issue.
+However, reaching better training and lesser loss did not fix this curve driving issue or inserted more driving out of the road.
 
 I then decided to add more data by driving full laps, collect data, and use it to train the model.
 
@@ -236,31 +238,45 @@ First by collecting a 2nd AntiClockwise driving lap, and adding it to the sample
 |------------|-------|
 | generator_v06 | reduce epochs to 4. : add 1 more lap I drive myself 003_OwnRecordingOneLapAntiClockwise |
 
-Still, not fixing the curve issue --> added more data by driving Clockwise (004) (inversed from normal sample lap and data 003) and training the model with this additional data, even adding 1 more lap antiClockwise (005) : 
+Still, not fixing the curve issue or keeping the car within road borders --> added more data by driving Clockwise (004) (inversed from normal sample lap and data 003) and training the model with this additional data, even adding 1 more lap antiClockwise (005) : 
 
 |file/version|development progress|
 |------------|-------|
 | generator_v07 | increase epochs to 7 add 1 more lap I drive myself 004_ownRecordOneLapClockwise add 1 more lap I drive myself 005_ownRecordOneLapAntiClockwise |
 
-Still, not fixing the curve issue --> I then followed recommendation to collect data about having the car on the sides and correcting the position to place it in the center of the road--> collected 1 lap correcting from the right, and 1 lap connecting from the left.
+Still, not fixing the curve issue or road border issues 
+
+I then decided to start again from the sample data provided by Udacity. --> I then followed recommendation to collect data about having the car on the sides and correcting the position to place it in the center of the road--> collected 1 lap correcting from the right, and 1 lap connecting from the left.
 
 |file/version|development progress|
 |------------|-------|
 | generator_v08 | back to Sample data without adding  recording. Add side corrections to center line. |
 
-Still, it could not help fixing the curve issue.
+Still, it could not help fixing the curve issue keeping car inside the track.
 
 |file/version|development progress|
 |------------|-------|
 | generator_v09 | add clockwise Lap + anticlockwise Lap, use pre-trained weights. add problematic curve recording several times. |
 
-then I branched back to my model_vxx.py files as the final submission should be a "model.py" file name format.
+Here adding more data or adding more data focussing on the problematic road would not fix issues neither.
+
+Then I branched back to my model_vxx.py files as the final submission should be a "model.py" file name format.
 
 - Renamed model_v13.py
 
 |file/version|development progress|
 |------------|-------|
 | model_v13 | try to fix conversion issue BGR --> RGB --> YUV. Remove RGB which I think was not doing it anyway because lacked mode option in nd.image(). - Back to only the Sample data as first step after fixing Image Format conversion issues in commonFunctions and in drive.py |
+
+From there, I realized by reading Mentor Helps questions and answers, that possibly the fact that the car was missing the curve could be due to image format conversions issues.
+- I looked again at my implementation, and found that : 
+  - I had not properly converted images after loading them. I was loading them in BGR, converted them to RGB because instructions were alerting that Simulator was only acceptiong RGB format. But then I converted RGB into YUV. But the way I converted BGR to RGB was not correct, and therefore the whole conversion chain was wrong. --> I fixed it.
+  - At the same time, I realized I completely neglected what the drive.py file was doing, and therefore ignored the fact that drive.py should have loaded images and convert them to YUV in order to feed them to the model to output steering angle.
+  
+Once I correctly fixed those 2 issues, I started to have a model which allowed to drive the car inside the track for more than one lap, and pass the problematic curve successfully.
+
+|file/version|development progress|
+|------------|-------|
 | model_v13 | passed with model.02 from 20201214_1400_modelsSampleData |
 | model_v14 | try with dropout layers, build model, transfer learning from best model.h5 so far, 10 epochs|
 
@@ -268,17 +284,8 @@ then I branched back to my model_vxx.py files as the final submission should be 
 
 ![alt text][image16]
 
+I stopped the research / development there, as I had consumed a lot of time already trying to pass a first lap successfully.
 
-
-
-
-
-- saving model.
-- learning transfer model_V14.py line 129.
-- mistakes done.
-- batch size.
-- Explain process : coded everything, tested, problems curve, added training in different phases, read articles, found clue, fix issue, train on sample data, submit project.
-- add training history image
 
 ### Postmortem - Improvements to be done in the future
 
