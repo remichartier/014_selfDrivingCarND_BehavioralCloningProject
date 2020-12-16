@@ -103,9 +103,9 @@ The other method used to prevent overfitting is to run several epochs, save each
 My current submission for this project only trains and validates the model based on the sample data provided for this project and is only for a proof of concept.
 
 - However, in the course of testing the project, I developped also a system to train and validate on several other additional data inputs (images + steering values) as extra means to reduce overfitting, cf model_v14.py lines 45-66.
-- I used those additional data thouroughfully to train and test different scenarios, however I was not seing improvements due to another issue I had not identified at that time. After finding this issue and fixing it, I just relied on the basic sample data provided with the project to validate the model and code to prove this concept is working. That is why the additional data I collected is not used for this submission, but could be if I had more time to play with it. It could be used as well to prevent overfitting on the basic sample data.
+- I used those additional data thoroughfully to train and test different scenarios, however I was not seing improvements due to another issue I had not identified at that time. After finding this issue and fixing it, I just relied on the basic sample data provided with the project to validate the model and code to prove this concept is working. That is why the additional data I collected is not used for this submission, but could be if I had more time to play with it. It could be used as well to prevent overfitting on the basic sample data.
 
-But even with sample data provided with the project, the model was trained and validated, and chosen to not overfit by selecting parameters trained on epoch #09. The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track (cf the provided video.mp4).
+But even with sample data provided with this project, the model was trained and validated, and chosen to not overfit by selecting parameters trained on epoch #09. The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track (cf the provided video.mp4).
 
 #### 3. Model parameter tuning
 
