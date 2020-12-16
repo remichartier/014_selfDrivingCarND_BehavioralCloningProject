@@ -20,7 +20,7 @@ The goals / steps of this project are the following:
 [image13]: ./writeupReportMaterials/lossHistory_submittedModel.png "History Object Visualization"
 [image14]: ./writeupReportMaterials/Screenshot_from_2020-12-15_17-48-12.png "Issue at Curve"
 [image15]: ./writeupReportMaterials/Screenshot_from_2020-12-15_17-48-52.png.png "Issue at Curve"
-[image15]: ./writeupReportMaterials/Screenshot_from_2020-12-15_17-52-40.png "Curve Issue Fixed"
+[image16]: ./writeupReportMaterials/Screenshot_from_2020-12-15_17-52-40.png "Curve Issue Fixed"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
@@ -191,6 +191,8 @@ Here I realized that final file name should be 'model.py', so instead of continu
 
 ![alt text][image14]
 
+![alt text][image15]
+
 |file/version|development progress|
 |------------|-------|
 | model_v12 | Try to avoid list to numpy conversion, taking few minutes, start with numpy image array straight from start. But loading images in numpy arrays was taking even longer, like forever.|
@@ -225,7 +227,7 @@ then I branched back to my model_vxx.py files as the final submission should be 
 
 **Exemple passing the curve :**
 
-![alt text][image15]
+![alt text][image16]
 
 
 
