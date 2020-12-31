@@ -5,3 +5,5 @@ simulationData/003_OwnRecordingOneLapAntiClockwise/IMG/
 simulationData/004_ownRecordOneLapClockwise/IMG
 simulationData/005_ownRecordOneLapAntiClockwise/IMG
 simulationData/**/IMG
+
+.ssh/
